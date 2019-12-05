@@ -11,122 +11,138 @@ import CoreLocation
 import CoreBluetooth
 
 class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationManagerDelegate {
-    
-    var transmitting: Bool = false
-    var listening: Bool = false
-    
-    var locationManager: CLLocationManager? = nil
-    
+
+    // shared
+    let proximityUUID =  UUID(uuidString: "39ED98FF-2900-441A-802F-9C398FC199D2")
+    let beaconID = "com.example.myDeviceRegion"
+
+    // transmitting
     var peripheralManager: CBPeripheralManager? = nil
     var transmittingRegion: CLBeaconRegion? = nil
-    var listeningRegion: CLBeaconRegion? = nil
+    var beaconPeripheralData: NSDictionary? = nil
     
+    let major : CLBeaconMajorValue = 100
+    let minor : CLBeaconMinorValue = 1
+    
+    public var detectedBeacons = [String : [String : String]]()
+    
+    lazy var transBeaconRegion: CLBeaconRegion? = {
+        return CLBeaconRegion(proximityUUID: proximityUUID!,
+                              major: major,
+                              minor: minor,
+                              identifier: beaconID)
+    }()
+    
+    // listening
+    var locationManager: CLLocationManager? = nil
+    var listeningRegion: CLBeaconRegion? = nil
+
+    lazy var listBeaconRegion: CLBeaconRegion? = {
+        return CLBeaconRegion(proximityUUID: proximityUUID!,
+                              identifier: beaconID)
+    }()
+
     // Start/stop transmitting
     func toggleTransmitting() {
-        if(transmitting) {
-            //Stop transmitting
-            peripheralManager?.stopAdvertising()
+        if let manager = peripheralManager {
             
+            //Stop transmitting
+            
+            manager.stopAdvertising()
             peripheralManager = nil
             transmittingRegion = nil
         }
         else {
+            
             //Start transmitting
-            print("Transmitting toggling")
-            if let tempRegion = createTransmittingBeaconRegion() {
-                let tempPeripheral = CBPeripheralManager(delegate: self, queue: nil)
-                let peripheralData = tempRegion.peripheralData(withMeasuredPower: nil)
-                
-                //This cant be called until after the Bluetooth component is on.
-                //I added a statement in the function below.
-                //tempPeripheral.startAdvertising(((peripheralData as NSDictionary) as! [String : Any]))
-                
-                peripheralManager = tempPeripheral
-                transmittingRegion = tempRegion
-            }
+            
+            peripheralManager = CBPeripheralManager(delegate: self,
+                                                    queue: nil)
+            
+            beaconPeripheralData = transBeaconRegion?.peripheralData(withMeasuredPower: nil)
         }
-        transmitting = !transmitting
     }
     
     func forceStopTransmitting() {
         //Stop transmitting
         peripheralManager?.stopAdvertising()
-        
         peripheralManager = nil
         transmittingRegion = nil
     }
     
     // Start/stop listening
     func toggleListening() {
-        if(listening) {
+        let rangedRegions = {
+            self.locationManager?.rangedRegions as? Set<CLBeaconRegion>
+        }
+        
+        if let regions = rangedRegions(), regions.count > 0 {
+            
             //Stop listening
-            guard let tempRegion = listeningRegion else {
-                return
-            }
+            
+            regions.forEach { locationManager?.stopRangingBeacons(in: $0) }
             
             locationManager?.delegate = nil
-            
-            locationManager?.stopRangingBeacons(in: tempRegion)
-            
             locationManager = nil
             listeningRegion = nil
         }
         else {
+            
             //Start listening
-            if let tempRegion = createListeningBeaconRegion() {
-                let tempLocationManager = CLLocationManager()
-                
-                tempLocationManager.delegate = self
-                
-                tempLocationManager.startRangingBeacons(in: tempRegion)
-                
-                locationManager = tempLocationManager
-                listeningRegion = tempRegion
+            
+            locationManager = CLLocationManager()
+            locationManager?.delegate = self
+            locationManager?.requestAlwaysAuthorization()
+        }
+    }
+        
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        guard status == .authorizedAlways
+            && CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self)
+            && CLLocationManager.isRangingAvailable() else { return }
+        
+        startScanning()
+    }
+    
+    func startScanning() {
+        guard let beaconRegion = listBeaconRegion else { return }
+        locationManager?.startMonitoring(for: beaconRegion)
+        locationManager?.startRangingBeacons(in: beaconRegion)
+    }
+    
+    func locationManager(_ manager: CLLocationManager,
+                         didRangeBeacons beacons: [CLBeacon],
+                         in region: CLBeaconRegion) {
+        
+        beacons.forEach {
+            let identifier = "\($0.major) \($0.minor)"
+            
+            if #available(iOS 13.0, *) {
+                print("\($0.uuid) \($0.major) \($0.minor) \($0.proximity) \($0.timestamp)")
+                let uuid = "\($0.uuid)"
+                let major = "\($0.major)"
+                let minor = "\($0.minor)"
+                let proximity = "\($0.proximity)"
+                let timestamp = "\($0.timestamp)"
+                detectedBeacons[identifier] = ["uuid": uuid, "major": major, "minor": minor, "proximity": proximity, "timestamp": timestamp]
+            } else {
+                print("\($0.proximityUUID) \($0.major) \($0.minor) \($0.proximity)")
+                let uuid = "\($0.proximityUUID)"
+                let major = "\($0.major)"
+                let minor = "\($0.minor)"
+                let proximity = "\($0.proximity)"
+                detectedBeacons[identifier] = ["uuid": uuid, "major": major, "minor": minor, "proximity": proximity]
             }
         }
-        listening = !listening
-    }
-    
-    func createTransmittingBeaconRegion() -> CLBeaconRegion? {
-        let proximityUUID = UUID(uuidString:
-            "39ED98FF-2900-441A-802F-9C398FC199D2")
-        let major : CLBeaconMajorValue = 100
-        let minor : CLBeaconMinorValue = 1
-        let beaconID = "com.example.myDeviceRegion"
         
-        return CLBeaconRegion(proximityUUID: proximityUUID!,
-                              major: major, minor: minor, identifier: beaconID)
-    }
-    
-    func createListeningBeaconRegion() -> CLBeaconRegion? {
-        let proximityUUID = UUID(uuidString:
-            "39ED98FF-2900-441A-802F-9C398FC199D2")
-        let beaconID = "com.example.myDeviceRegion"
-        
-        return CLBeaconRegion(proximityUUID: proximityUUID!, identifier: beaconID)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
-        print(beacons)
     }
     
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
-        if peripheral.state == .poweredOn {
-            print("Bluetooth on!")
-            if(transmitting) {
-                //I know that my region has a value when turned on.
-                //I also know that my transmitting Bool is true.
-                print("Transmitting on!")
-                let beaconPeripheralData = transmittingRegion?.peripheralData(withMeasuredPower: nil)
-                print(beaconPeripheralData ?? "nil")
-                peripheralManager?.startAdvertising(beaconPeripheralData as? [String: Any])
-            }
-            if(listening) {
-                print("Listening on!")
-            }
-        } else if peripheral.state == .poweredOff {
-            peripheralManager?.stopAdvertising()
-        }
+        guard peripheral.state == .poweredOn else { return }
+        print("Transmitting on!")
+        peripheral.startAdvertising(beaconPeripheralData as? [String: Any])
     }
     
 }
