@@ -8,12 +8,15 @@
 
 import UIKit
 
-class ProfessorViewController: UIViewController, UITextFieldDelegate {
+class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var transmitter: TransmitterListener? = nil
+    var presentStudents: [String] = []
     
     @IBOutlet weak var courseNameTextfield: UITextField!
     @IBOutlet weak var transmissionSwitch: UISwitch!
+    @IBOutlet weak var presentStudentsTable: UITableView!
+    @IBOutlet weak var logoutButton: UIButton!
     
     @IBAction func transmissionAction(_ sender: Any) {
         transmitter?.toggleTransmitting()
@@ -37,6 +40,17 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate {
         transmitter = TransmitterListener()
         
         self.courseNameTextfield.delegate = self
+        
+        presentStudentsTable.delegate = self
+        presentStudentsTable.dataSource = self
+        
+        for i in 1...100 {
+            presentStudents.append(String(i))
+        }
+        
+        //Visual changes
+        logoutButton.layer.cornerRadius = 10
+        logoutButton.clipsToBounds = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -46,15 +60,32 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate {
         transmissionSwitch.setOn(false, animated: false)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
-    */
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presentStudents.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "presentStudentCell")!
+           
+        let text = presentStudents[indexPath.row]
+           
+        cell.textLabel?.text = text
+           
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let alertController = UIAlertController(title: "Hint", message: "You have selected row \(indexPath.row).", preferredStyle: .alert)
+           
+        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+           
+        alertController.addAction(alertAction)
+           
+        present(alertController, animated: true, completion: nil)
+    }
 
 }

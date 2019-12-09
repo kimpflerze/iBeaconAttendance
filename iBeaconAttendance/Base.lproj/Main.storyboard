@@ -163,7 +163,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jhf-dt-Dag">
-                                <rect key="frame" x="32" y="137.5" width="350" height="664.5"/>
+                                <rect key="frame" x="32" y="134.5" width="350" height="609.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="beaconingProfessorCell" id="vcA-iZ-jh1">
@@ -176,20 +176,38 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6HR-fh-3xo">
+                                <rect key="frame" x="60" y="776" width="294" height="54"/>
+                                <color key="backgroundColor" red="0.19141237110000001" green="0.42365533970000002" blue="0.45272871380000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="efa-Is-TLS"/>
+                                </constraints>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="studentLoginAction:" destination="T2c-JP-8YT" eventType="touchUpInside" id="x4H-lM-jEy"/>
+                                    <action selector="toStudentLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TnA-3c-dM6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="jhf-dt-Dag" firstAttribute="top" secondItem="iBb-Av-BMT" secondAttribute="bottom" constant="35" id="17B-GB-Pp8"/>
+                            <constraint firstItem="jhf-dt-Dag" firstAttribute="top" secondItem="iBb-Av-BMT" secondAttribute="bottom" constant="32" id="17B-GB-Pp8"/>
+                            <constraint firstItem="6HR-fh-3xo" firstAttribute="top" secondItem="jhf-dt-Dag" secondAttribute="bottom" constant="32" id="BEj-xZ-45d"/>
                             <constraint firstItem="jhf-dt-Dag" firstAttribute="leading" secondItem="VTt-py-bqP" secondAttribute="leading" constant="32" id="Hmv-uG-n8A"/>
                             <constraint firstItem="VTt-py-bqP" firstAttribute="trailing" secondItem="jhf-dt-Dag" secondAttribute="trailing" constant="32" id="IH2-dq-1YR"/>
                             <constraint firstItem="iBb-Av-BMT" firstAttribute="top" secondItem="VTt-py-bqP" secondAttribute="top" constant="32" id="Jbh-eD-nDp"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="6HR-fh-3xo" secondAttribute="bottom" constant="32" id="Tnq-Vc-nGq"/>
+                            <constraint firstItem="VTt-py-bqP" firstAttribute="trailing" secondItem="6HR-fh-3xo" secondAttribute="trailing" constant="60" id="a0T-yQ-b21"/>
+                            <constraint firstItem="6HR-fh-3xo" firstAttribute="leading" secondItem="VTt-py-bqP" secondAttribute="leading" constant="60" id="inS-51-bfC"/>
                             <constraint firstItem="iBb-Av-BMT" firstAttribute="centerX" secondItem="71k-xv-nqq" secondAttribute="centerX" id="nOr-jP-35L"/>
-                            <constraint firstItem="VTt-py-bqP" firstAttribute="bottom" secondItem="jhf-dt-Dag" secondAttribute="bottom" constant="60" id="uUv-WA-TYG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="VTt-py-bqP"/>
                     </view>
                     <connections>
                         <outlet property="beaconingProfessorsTable" destination="jhf-dt-Dag" id="RBG-3A-0YJ"/>
+                        <outlet property="logoutButtono" destination="6HR-fh-3xo" id="JSj-hh-auo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="afZ-Q6-5ll" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -275,7 +293,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="NaY-oW-w3y" userLabel="Main Stack View">
-                                <rect key="frame" x="32" y="52" width="350" height="126.5"/>
+                                <rect key="frame" x="32" y="76" width="350" height="126.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Professor View" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQ5-FU-ATc">
                                         <rect key="frame" x="0.0" y="0.0" width="350" height="26.5"/>
@@ -330,54 +348,59 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kxz-cw-wEC">
-                                <rect key="frame" x="32" y="203.5" width="350" height="431.5"/>
+                                <rect key="frame" x="32" y="232" width="350" height="493"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="BNP-m5-2eI">
-                                        <rect key="frame" x="0.0" y="28" width="350" height="43"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="presentStudentCell" id="BNP-m5-2eI">
+                                        <rect key="frame" x="0.0" y="28" width="350" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BNP-m5-2eI" id="oKz-lY-idj">
-                                            <rect key="frame" x="0.0" y="0.0" width="350" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="350" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3OM-zR-AoY">
-                                                    <rect key="frame" x="36" y="11" width="278" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="3OM-zR-AoY" firstAttribute="leading" secondItem="oKz-lY-idj" secondAttribute="leadingMargin" constant="16" id="2nt-CQ-MIT"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="3OM-zR-AoY" secondAttribute="trailing" constant="16" id="5Xb-NF-7gg"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="3OM-zR-AoY" secondAttribute="bottom" id="AtW-qH-NTg"/>
-                                                <constraint firstItem="3OM-zR-AoY" firstAttribute="top" secondItem="oKz-lY-idj" secondAttribute="topMargin" id="egP-O4-odd"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R89-0E-P2g">
+                                <rect key="frame" x="60" y="776" width="294" height="54"/>
+                                <color key="backgroundColor" red="0.19141237110000001" green="0.42365533970000002" blue="0.45272871380000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="85I-kI-2Mh"/>
+                                </constraints>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="studentLoginAction:" destination="T2c-JP-8YT" eventType="touchUpInside" id="aVb-tT-GuM"/>
+                                    <action selector="toStudentLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J99-9X-d4D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="R89-0E-P2g" firstAttribute="leading" secondItem="e0E-ME-7lE" secondAttribute="leading" constant="60" id="3jc-79-2jT"/>
                             <constraint firstItem="NaY-oW-w3y" firstAttribute="top" secondItem="e0E-ME-7lE" secondAttribute="top" constant="32" id="Bnq-NO-4Fe"/>
-                            <constraint firstItem="Kxz-cw-wEC" firstAttribute="top" secondItem="NaY-oW-w3y" secondAttribute="bottom" constant="32" id="JuM-dH-gfi"/>
                             <constraint firstItem="NaY-oW-w3y" firstAttribute="leading" secondItem="e0E-ME-7lE" secondAttribute="leading" constant="32" id="UPL-kB-Cct"/>
                             <constraint firstItem="Kxz-cw-wEC" firstAttribute="leading" secondItem="e0E-ME-7lE" secondAttribute="leading" constant="32" id="VkS-kR-ASf"/>
+                            <constraint firstItem="e0E-ME-7lE" firstAttribute="trailing" secondItem="R89-0E-P2g" secondAttribute="trailing" constant="60" id="eMC-7m-lfD"/>
                             <constraint firstItem="e0E-ME-7lE" firstAttribute="trailing" secondItem="Kxz-cw-wEC" secondAttribute="trailing" constant="32" id="fPp-xd-bTR"/>
-                            <constraint firstItem="e0E-ME-7lE" firstAttribute="bottom" secondItem="Kxz-cw-wEC" secondAttribute="bottom" constant="32" id="p6C-Y4-XS4"/>
+                            <constraint firstItem="Kxz-cw-wEC" firstAttribute="top" secondItem="NaY-oW-w3y" secondAttribute="bottom" constant="32" id="mEv-zd-3LH"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="R89-0E-P2g" secondAttribute="bottom" constant="32" id="wj2-av-0aB"/>
+                            <constraint firstItem="R89-0E-P2g" firstAttribute="top" secondItem="Kxz-cw-wEC" secondAttribute="bottom" constant="32" id="xdv-Fa-eYb"/>
                             <constraint firstItem="e0E-ME-7lE" firstAttribute="trailing" secondItem="NaY-oW-w3y" secondAttribute="trailing" constant="32" id="xo4-g8-S0E"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e0E-ME-7lE"/>
                     </view>
                     <connections>
                         <outlet property="courseNameTextfield" destination="HTu-c1-Kqd" id="L96-Iw-nr4"/>
+                        <outlet property="logoutButton" destination="R89-0E-P2g" id="Ee2-lQ-v8j"/>
+                        <outlet property="presentStudentsTable" destination="Kxz-cw-wEC" id="k8e-wb-G2I"/>
                         <outlet property="transmissionSwitch" destination="Z5T-bg-Ejx" id="hmV-Qm-H0S"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wJL-Ym-zo3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2109.5999999999999" y="447.52623688155927"/>
+            <point key="canvasLocation" x="2107.2463768115945" y="447.32142857142856"/>
         </scene>
     </scenes>
 </document>

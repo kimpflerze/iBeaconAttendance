@@ -15,6 +15,7 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
     // shared
     let proximityUUID =  UUID(uuidString: "39ED98FF-2900-441A-802F-9C398FC199D2")
     let beaconID = "com.example.myDeviceRegion"
+    final let newBeaconNotification = "newBeaconNotification"
 
     // transmitting
     var peripheralManager: CBPeripheralManager? = nil
@@ -24,7 +25,7 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
     let major : CLBeaconMajorValue = 100
     let minor : CLBeaconMinorValue = 1
     
-    public var detectedBeacons = [String : [String : String]]()
+    private var detectedBeacons = [String : [String : String]]()
     
     lazy var transBeaconRegion: CLBeaconRegion? = {
         return CLBeaconRegion(proximityUUID: proximityUUID!,
@@ -41,6 +42,10 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
         return CLBeaconRegion(proximityUUID: proximityUUID!,
                               identifier: beaconID)
     }()
+    
+    func getDetectedBeacons() -> Dictionary<String, [String : String]> {
+        return detectedBeacons
+    }
 
     // Start/stop transmitting
     func toggleTransmitting() {
@@ -117,24 +122,29 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
                          in region: CLBeaconRegion) {
         
         beacons.forEach {
-            let identifier = "\($0.major) \($0.minor)"
+            let identifier = "\($0.major).\($0.minor)"
+            var information: [String : String] = [:]
             
             if #available(iOS 13.0, *) {
-                print("\($0.uuid) \($0.major) \($0.minor) \($0.proximity) \($0.timestamp)")
+                //print("\($0.uuid) \($0.major) \($0.minor) \($0.proximity) \($0.timestamp)")
                 let uuid = "\($0.uuid)"
                 let major = "\($0.major)"
                 let minor = "\($0.minor)"
                 let proximity = "\($0.proximity)"
                 let timestamp = "\($0.timestamp)"
-                detectedBeacons[identifier] = ["uuid": uuid, "major": major, "minor": minor, "proximity": proximity, "timestamp": timestamp]
+                information = ["uuid": uuid, "major": major, "minor": minor, "proximity": proximity, "timestamp": timestamp]
+                detectedBeacons[identifier] = information
             } else {
-                print("\($0.proximityUUID) \($0.major) \($0.minor) \($0.proximity)")
+                //print("\($0.proximityUUID) \($0.major) \($0.minor) \($0.proximity)")
                 let uuid = "\($0.proximityUUID)"
                 let major = "\($0.major)"
                 let minor = "\($0.minor)"
                 let proximity = "\($0.proximity)"
-                detectedBeacons[identifier] = ["uuid": uuid, "major": major, "minor": minor, "proximity": proximity]
+                information = ["uuid": uuid, "major": major, "minor": minor, "proximity": proximity]
+                detectedBeacons[identifier] = information
             }
+            
+            NotificationCenter.default.post(name: .discoveredNewBeacon, object: nil, userInfo: ["identifier" : identifier])
         }
         
     }
@@ -145,4 +155,9 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
         peripheral.startAdvertising(beaconPeripheralData as? [String: Any])
     }
     
+}
+
+extension Notification.Name {
+    static let discoveredNewBeacon = Notification.Name(
+       rawValue: "discoveredNewBeacon")
 }

@@ -11,7 +11,6 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var studentLoginButton: UIButton!
-    
     @IBOutlet weak var professorLogin: UIButton!
     
     @IBAction func toStudentLoginAction(_ sender: Any) {
@@ -27,7 +26,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-    
+        //Visual changes
+        studentLoginButton.layer.cornerRadius = 10
+        studentLoginButton.clipsToBounds = true
+        
+        professorLogin.layer.cornerRadius = 10
+        professorLogin.clipsToBounds = true
+        
     }
 
 

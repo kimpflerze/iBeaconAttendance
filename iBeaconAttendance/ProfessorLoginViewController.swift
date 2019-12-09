@@ -53,6 +53,10 @@ class ProfessorLoginViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         self.professorUsernameTextfield.delegate = self
         self.professorPasswordTextfield.delegate = self
+        
+        //Visual changes
+        professorLoginButton.layer.cornerRadius = 10
+        professorLoginButton.clipsToBounds = true
     }
     
 

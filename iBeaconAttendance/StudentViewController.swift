@@ -11,9 +11,13 @@ import UIKit
 class StudentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var beaconingProfessorsTable: UITableView!
+    @IBOutlet weak var logoutButton: UIButton!
     
     var listener: TransmitterListener? = nil
-    var temporarydata: [String] = []
+    
+    let notificationCenter = NotificationCenter.default
+    
+    var discoveredBeaconIdentifiers: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,15 +29,37 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
         beaconingProfessorsTable.delegate = self
         beaconingProfessorsTable.dataSource = self
         
-        //Fill in some sample data
-        for i in 0...100 {
-            temporarydata.append(String(i))
+        //Notification center for detecting new professor beacon.
+        notificationCenter.addObserver(self, selector: #selector(StudentViewController.onDidReceiveData), name: .discoveredNewBeacon, object: nil)
+        
+        //Visual changes
+        logoutButton.layer.cornerRadius = 10
+        logoutButton.clipsToBounds = true
+    }
+    
+    @objc func onDidReceiveData(_ notification:Notification) {
+        // Do something now
+        let userInfo = notification.userInfo
+        let identifier = userInfo?["identifier"] as! String
+        
+        // Fetch the Professor's name associated with the received identifier.
+        
+        // Append the Professor's name into the table, instead of the identifier.
+        if(!discoveredBeaconIdentifiers.contains(identifier)) {
+            discoveredBeaconIdentifiers.append(identifier)
+            
+            beaconingProfessorsTable.beginUpdates()
+            beaconingProfessorsTable.insertRows(at: [
+                (NSIndexPath(row: discoveredBeaconIdentifiers.count-1, section: 0) as IndexPath)], with: .automatic)
+            beaconingProfessorsTable.endUpdates()
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         listener?.toggleListening()
         listener = nil
+
+    NotificationCenter.default.removeObserver(notificationCenter)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -41,13 +67,13 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return temporarydata.count
+         return discoveredBeaconIdentifiers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          let cell = tableView.dequeueReusableCell(withIdentifier: "beaconingProfessorCell")!
             
-         let text = temporarydata[indexPath.row]
+         let text = discoveredBeaconIdentifiers[indexPath.row]
             
          cell.textLabel?.text = text
             
@@ -65,15 +91,5 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
          present(alertController, animated: true, completion: nil)
             
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

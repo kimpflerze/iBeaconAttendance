@@ -19,6 +19,8 @@
 		EA2DEA4F237DFB6400AE0E60 /* ProfessorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA4E237DFB6400AE0E60 /* ProfessorViewController.swift */; };
 		EA2DEA512381DE1400AE0E60 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA502381DE1400AE0E60 /* UserLogin.swift */; };
 		EA2DEA532382E08A00AE0E60 /* TransmitterListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA522382E08A00AE0E60 /* TransmitterListener.swift */; };
+		EACECC61239C2965002CAEAB /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACECC60239C2965002CAEAB /* Student.swift */; };
+		EACECC63239C296E002CAEAB /* Professor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACECC62239C296E002CAEAB /* Professor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		EA2DEA4E237DFB6400AE0E60 /* ProfessorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessorViewController.swift; sourceTree = "<group>"; };
 		EA2DEA502381DE1400AE0E60 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
 		EA2DEA522382E08A00AE0E60 /* TransmitterListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransmitterListener.swift; sourceTree = "<group>"; };
+		EACECC60239C2965002CAEAB /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
+		EACECC62239C296E002CAEAB /* Professor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Professor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 				EA2DEA2B237C92B100AE0E60 /* Assets.xcassets */,
 				EA2DEA2D237C92B100AE0E60 /* LaunchScreen.storyboard */,
 				EA2DEA30237C92B100AE0E60 /* Info.plist */,
+				EACECC60239C2965002CAEAB /* Student.swift */,
+				EACECC62239C296E002CAEAB /* Professor.swift */,
 			);
 			path = iBeaconAttendance;
 			sourceTree = "<group>";
@@ -219,8 +225,10 @@
 				EA2DEA4B237C9CBA00AE0E60 /* ProfessorLoginViewController.swift in Sources */,
 				EA2DEA49237C9CB100AE0E60 /* StudentLoginViewController.swift in Sources */,
 				EA2DEA27237C92AF00AE0E60 /* EntryViewController.swift in Sources */,
+				EACECC61239C2965002CAEAB /* Student.swift in Sources */,
 				EA2DEA4F237DFB6400AE0E60 /* ProfessorViewController.swift in Sources */,
 				EA2DEA512381DE1400AE0E60 /* UserLogin.swift in Sources */,
+				EACECC63239C296E002CAEAB /* Professor.swift in Sources */,
 				EA2DEA25237C92AF00AE0E60 /* AppDelegate.swift in Sources */,
 				EA2DEA532382E08A00AE0E60 /* TransmitterListener.swift in Sources */,
 			);

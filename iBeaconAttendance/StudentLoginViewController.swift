@@ -53,6 +53,10 @@ class StudentLoginViewController: UIViewController, UITextFieldDelegate {
         // Do any additional setup after loading the view.
         self.studentUsernameTextfield.delegate = self
         self.studentPasswordTextfield.delegate = self
+        
+        //Visual changes.
+        studentLoginButton.layer.cornerRadius = 10
+        studentLoginButton.clipsToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
