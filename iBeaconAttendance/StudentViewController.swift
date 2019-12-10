@@ -17,7 +17,8 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     let notificationCenter = NotificationCenter.default
     
-    var discoveredBeaconIdentifiers: [String] = []
+    //var discoveredBeaconIdentifiers: [String] = []
+    var discoveredProfessorBeacons: [Professor] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,16 +36,33 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
         //Visual changes
         logoutButton.layer.cornerRadius = 10
         logoutButton.clipsToBounds = true
+        
+        beaconingProfessorsTable.layer.masksToBounds = true
+        beaconingProfessorsTable.layer.borderColor = Utilities.iBeaconAttendanceBlue.cgColor
+        beaconingProfessorsTable.layer.borderWidth = 2.0
+        beaconingProfessorsTable.layer.cornerRadius = 10
+    }
+    
+    func identifierIsDiscovered(identifier: String) -> Bool {
+        for professor in discoveredProfessorBeacons {
+            if(professor.identifier == identifier) {
+                return true
+            }
+        }
+        
+        return false
     }
     
     @objc func onDidReceiveData(_ notification:Notification) {
         // Do something now
         let userInfo = notification.userInfo
         let identifier = userInfo?["identifier"] as! String
+        let newProfessor = userInfo?["professor"] as! Professor
         
         // Fetch the Professor's name associated with the received identifier.
         
         // Append the Professor's name into the table, instead of the identifier.
+        /*
         if(!discoveredBeaconIdentifiers.contains(identifier)) {
             discoveredBeaconIdentifiers.append(identifier)
             
@@ -53,13 +71,22 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
                 (NSIndexPath(row: discoveredBeaconIdentifiers.count-1, section: 0) as IndexPath)], with: .automatic)
             beaconingProfessorsTable.endUpdates()
         }
+        */
+        if(!identifierIsDiscovered(identifier: identifier)) {
+            discoveredProfessorBeacons.append(newProfessor)
+            
+            beaconingProfessorsTable.beginUpdates()
+            beaconingProfessorsTable.insertRows(at: [
+                (NSIndexPath(row: discoveredProfessorBeacons.count-1, section: 0) as IndexPath)], with: .automatic)
+            beaconingProfessorsTable.endUpdates()
+        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         listener?.toggleListening()
         listener = nil
 
-    NotificationCenter.default.removeObserver(notificationCenter)
+        NotificationCenter.default.removeObserver(notificationCenter)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -67,29 +94,34 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         return discoveredBeaconIdentifiers.count
+        //return discoveredBeaconIdentifiers.count
+        return discoveredProfessorBeacons.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let cell = tableView.dequeueReusableCell(withIdentifier: "beaconingProfessorCell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "beaconingProfessorCell")!
             
-         let text = discoveredBeaconIdentifiers[indexPath.row]
+        //let text = discoveredBeaconIdentifiers[indexPath.row]
+        let text = discoveredProfessorBeacons[indexPath.row].identifier
             
-         cell.textLabel?.text = text
+        cell.textLabel?.text = text
             
-         return cell
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
-         let alertController = UIAlertController(title: "Hint", message: "You have selected row \(indexPath.row).", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Hint", message: "You have selected row \(indexPath.row).", preferredStyle: .alert)
             
-         let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
             
-         alertController.addAction(alertAction)
+        alertController.addAction(alertAction)
             
-         present(alertController, animated: true, completion: nil)
-            
+        present(alertController, animated: true, completion: nil)
     }
-
+    
+    @IBAction func studentLogoutAction(_ sender: Any) {
+        performSegue(withIdentifier: "studentLogoutSegway", sender: self)
+    }
+    
 }

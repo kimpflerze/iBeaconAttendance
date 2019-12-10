@@ -21,6 +21,19 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
     @IBAction func transmissionAction(_ sender: Any) {
         transmitter?.toggleTransmitting()
         
+        //Check if courseNameTextfield is empty before beginning transmission.
+        guard let text = courseNameTextfield.text, !text.isEmpty else {
+            let courseNameTextfieldEmptyAlert = UIAlertController(title: "No Course Name", message: "The course name input field is empty, please input a course name!", preferredStyle: .alert)
+            
+            courseNameTextfieldEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            transmissionSwitch.setOn(false, animated: true)
+            
+            self.present(courseNameTextfieldEmptyAlert, animated: true)
+            
+            return
+        }
+        
         let transmitterToggleAlert = UIAlertController(title: "Transmitter Status", message: "The transmitter status was toggled!", preferredStyle: .alert)
         
         transmitterToggleAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
@@ -44,13 +57,18 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
         presentStudentsTable.delegate = self
         presentStudentsTable.dataSource = self
         
-        for i in 1...100 {
+        for i in 1...20 {
             presentStudents.append(String(i))
         }
         
         //Visual changes
         logoutButton.layer.cornerRadius = 10
         logoutButton.clipsToBounds = true
+        
+        presentStudentsTable.layer.masksToBounds = true
+        presentStudentsTable.layer.borderColor = Utilities.iBeaconAttendanceBlue.cgColor
+        presentStudentsTable.layer.borderWidth = 2.0
+        presentStudentsTable.layer.cornerRadius = 10
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -73,7 +91,7 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
            
         let text = presentStudents[indexPath.row]
            
-        cell.textLabel?.text = text
+        cell.textLabel?.text = String(indexPath.row + 1) + ". " + text
            
         return cell
     }
@@ -88,4 +106,8 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
         present(alertController, animated: true, completion: nil)
     }
 
+    @IBAction func professorLogoutAction(_ sender: Any) {
+        performSegue(withIdentifier: "professorLogoutSegway", sender: self)
+    }
+    
 }

@@ -20,14 +20,20 @@ class Professor {
     //lostConnectionTimer used to determine if connection is lost.
     var lostConnectionTimer: Int = 30
     
-    init(professorInformation: [String : Any]) {
-        name = professorInformation["name"] as? String
-        identifier = professorInformation["identifier"] as? String
-        uuid = professorInformation["uuid"] as? String
-        major = professorInformation["major"] as? Int
-        minor  = professorInformation["minor"] as? Int
-        proximity = professorInformation["proximity"] as? Int
-        timestamp = professorInformation["timestamp"] as? Date
+    init(information: [String : Any]) {
+        name = information["name"] as? String
+        identifier = information["identifier"] as? String
+        uuid = information["uuid"] as? String
+        if let tempString = information["major"] as? String, let tempInt = Int(tempString) {
+          major = tempInt
+        }
+        if let tempString = information["minor"] as? String, let tempInt = Int(tempString) {
+          minor = tempInt
+        }
+        //major = information["major"] as? Int
+        //minor  = information["minor"] as? Int
+        proximity = information["proximity"] as? Int
+        timestamp = information["timestamp"] as? Date
     }
     
 }

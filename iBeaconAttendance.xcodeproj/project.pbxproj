@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07E8FB36341AF8FD6BB4B2C9 /* Pods_iBeaconAttendanceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537E4351C0EBCC2F11BB5755 /* Pods_iBeaconAttendanceTests.framework */; };
+		CB238E1A76629F3A89C998C2 /* Pods_iBeaconAttendance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E438AEB09E3C3409D4F866 /* Pods_iBeaconAttendance.framework */; };
 		EA2DEA25237C92AF00AE0E60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA24237C92AF00AE0E60 /* AppDelegate.swift */; };
 		EA2DEA27237C92AF00AE0E60 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA26237C92AF00AE0E60 /* EntryViewController.swift */; };
 		EA2DEA2A237C92AF00AE0E60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2DEA28237C92AF00AE0E60 /* Main.storyboard */; };
@@ -21,6 +23,9 @@
 		EA2DEA532382E08A00AE0E60 /* TransmitterListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA522382E08A00AE0E60 /* TransmitterListener.swift */; };
 		EACECC61239C2965002CAEAB /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACECC60239C2965002CAEAB /* Student.swift */; };
 		EACECC63239C296E002CAEAB /* Professor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACECC62239C296E002CAEAB /* Professor.swift */; };
+		EACECC65239FED3C002CAEAB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACECC64239FED3C002CAEAB /* User.swift */; };
+		EACECC6723A00461002CAEAB /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACECC6623A00461002CAEAB /* Utilities.swift */; };
+		EACECC6A23A0499E002CAEAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EACECC6923A0499E002CAEAB /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +39,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		30E438AEB09E3C3409D4F866 /* Pods_iBeaconAttendance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iBeaconAttendance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		537E4351C0EBCC2F11BB5755 /* Pods_iBeaconAttendanceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iBeaconAttendanceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A05E669B37CFE662BF827E1F /* Pods-iBeaconAttendance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iBeaconAttendance.debug.xcconfig"; path = "Target Support Files/Pods-iBeaconAttendance/Pods-iBeaconAttendance.debug.xcconfig"; sourceTree = "<group>"; };
+		AAD7497EC039193A9DCF8D30 /* Pods-iBeaconAttendanceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iBeaconAttendanceTests.release.xcconfig"; path = "Target Support Files/Pods-iBeaconAttendanceTests/Pods-iBeaconAttendanceTests.release.xcconfig"; sourceTree = "<group>"; };
+		CAF6F96F0CE4DAC9AFF0587F /* Pods-iBeaconAttendanceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iBeaconAttendanceTests.debug.xcconfig"; path = "Target Support Files/Pods-iBeaconAttendanceTests/Pods-iBeaconAttendanceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D1F1ACBA961709D2C13DC82E /* Pods-iBeaconAttendance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iBeaconAttendance.release.xcconfig"; path = "Target Support Files/Pods-iBeaconAttendance/Pods-iBeaconAttendance.release.xcconfig"; sourceTree = "<group>"; };
 		EA2DEA21237C92AF00AE0E60 /* iBeaconAttendance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconAttendance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2DEA24237C92AF00AE0E60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA2DEA26237C92AF00AE0E60 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
@@ -52,6 +63,10 @@
 		EA2DEA522382E08A00AE0E60 /* TransmitterListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransmitterListener.swift; sourceTree = "<group>"; };
 		EACECC60239C2965002CAEAB /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		EACECC62239C296E002CAEAB /* Professor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Professor.swift; sourceTree = "<group>"; };
+		EACECC64239FED3C002CAEAB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		EACECC6623A00461002CAEAB /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		EACECC6823A00FA2002CAEAB /* BackendStructure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BackendStructure.md; sourceTree = "<group>"; };
+		EACECC6923A0499E002CAEAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB238E1A76629F3A89C998C2 /* Pods_iBeaconAttendance.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,18 +82,42 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07E8FB36341AF8FD6BB4B2C9 /* Pods_iBeaconAttendanceTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		800CC24FE029F3AB9E72E3E3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				30E438AEB09E3C3409D4F866 /* Pods_iBeaconAttendance.framework */,
+				537E4351C0EBCC2F11BB5755 /* Pods_iBeaconAttendanceTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DD83915A8C682536CCBADC83 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A05E669B37CFE662BF827E1F /* Pods-iBeaconAttendance.debug.xcconfig */,
+				D1F1ACBA961709D2C13DC82E /* Pods-iBeaconAttendance.release.xcconfig */,
+				CAF6F96F0CE4DAC9AFF0587F /* Pods-iBeaconAttendanceTests.debug.xcconfig */,
+				AAD7497EC039193A9DCF8D30 /* Pods-iBeaconAttendanceTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		EA2DEA18237C92AF00AE0E60 = {
 			isa = PBXGroup;
 			children = (
 				EA2DEA23237C92AF00AE0E60 /* iBeaconAttendance */,
 				EA2DEA38237C92B200AE0E60 /* iBeaconAttendanceTests */,
 				EA2DEA22237C92AF00AE0E60 /* Products */,
+				DD83915A8C682536CCBADC83 /* Pods */,
+				800CC24FE029F3AB9E72E3E3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,6 +147,10 @@
 				EA2DEA30237C92B100AE0E60 /* Info.plist */,
 				EACECC60239C2965002CAEAB /* Student.swift */,
 				EACECC62239C296E002CAEAB /* Professor.swift */,
+				EACECC64239FED3C002CAEAB /* User.swift */,
+				EACECC6623A00461002CAEAB /* Utilities.swift */,
+				EACECC6823A00FA2002CAEAB /* BackendStructure.md */,
+				EACECC6923A0499E002CAEAB /* GoogleService-Info.plist */,
 			);
 			path = iBeaconAttendance;
 			sourceTree = "<group>";
@@ -127,9 +171,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA2DEA3E237C92B200AE0E60 /* Build configuration list for PBXNativeTarget "iBeaconAttendance" */;
 			buildPhases = (
+				9559504DF2D0C3742D5741FB /* [CP] Check Pods Manifest.lock */,
 				EA2DEA1D237C92AF00AE0E60 /* Sources */,
 				EA2DEA1E237C92AF00AE0E60 /* Frameworks */,
 				EA2DEA1F237C92AF00AE0E60 /* Resources */,
+				6243CBAC70A08318ADEB09E0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -144,6 +190,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA2DEA41237C92B200AE0E60 /* Build configuration list for PBXNativeTarget "iBeaconAttendanceTests" */;
 			buildPhases = (
+				A640AA984DBC1C0C1081DDD9 /* [CP] Check Pods Manifest.lock */,
 				EA2DEA31237C92B200AE0E60 /* Sources */,
 				EA2DEA32237C92B200AE0E60 /* Frameworks */,
 				EA2DEA33237C92B200AE0E60 /* Resources */,
@@ -204,6 +251,7 @@
 				EA2DEA2F237C92B100AE0E60 /* LaunchScreen.storyboard in Resources */,
 				EA2DEA2C237C92B100AE0E60 /* Assets.xcassets in Resources */,
 				EA2DEA2A237C92AF00AE0E60 /* Main.storyboard in Resources */,
+				EACECC6A23A0499E002CAEAB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +264,70 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6243CBAC70A08318ADEB09E0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iBeaconAttendance/Pods-iBeaconAttendance-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iBeaconAttendance/Pods-iBeaconAttendance-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iBeaconAttendance/Pods-iBeaconAttendance-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9559504DF2D0C3742D5741FB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iBeaconAttendance-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A640AA984DBC1C0C1081DDD9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iBeaconAttendanceTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EA2DEA1D237C92AF00AE0E60 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -227,10 +339,12 @@
 				EA2DEA27237C92AF00AE0E60 /* EntryViewController.swift in Sources */,
 				EACECC61239C2965002CAEAB /* Student.swift in Sources */,
 				EA2DEA4F237DFB6400AE0E60 /* ProfessorViewController.swift in Sources */,
+				EACECC6723A00461002CAEAB /* Utilities.swift in Sources */,
 				EA2DEA512381DE1400AE0E60 /* UserLogin.swift in Sources */,
 				EACECC63239C296E002CAEAB /* Professor.swift in Sources */,
 				EA2DEA25237C92AF00AE0E60 /* AppDelegate.swift in Sources */,
 				EA2DEA532382E08A00AE0E60 /* TransmitterListener.swift in Sources */,
+				EACECC65239FED3C002CAEAB /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +504,7 @@
 		};
 		EA2DEA3F237C92B200AE0E60 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A05E669B37CFE662BF827E1F /* Pods-iBeaconAttendance.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -409,6 +524,7 @@
 		};
 		EA2DEA40237C92B200AE0E60 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1F1ACBA961709D2C13DC82E /* Pods-iBeaconAttendance.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -428,6 +544,7 @@
 		};
 		EA2DEA42237C92B200AE0E60 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CAF6F96F0CE4DAC9AFF0587F /* Pods-iBeaconAttendanceTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -449,6 +566,7 @@
 		};
 		EA2DEA43237C92B200AE0E60 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AAD7497EC039193A9DCF8D30 /* Pods-iBeaconAttendanceTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
