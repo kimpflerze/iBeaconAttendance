@@ -8,12 +8,14 @@
 
 import Foundation
 
-class Student {
-    var name: String? = nil
-    var identifier: String? = nil
+class Student: User {
     
+    /*
     init(studentInformation: [String : Any]) {
-        name = studentInformation["name"] as? String
-        identifier = studentInformation["identifier"] as? String
+        super.init(userInformation: studentInformation)
+        
+        name = studentInformation["name"] as! String
+        email = studentInformation["identifier"] as? String
     }
+    */
 }

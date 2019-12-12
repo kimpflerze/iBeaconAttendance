@@ -10,12 +10,23 @@ import Foundation
 
 class User {
     
+    static var shared = User(userInformation: ["name": ""])
+    
     var email: String? = nil
-    var id: String? = nil
+    var name: String = ""
+    var firstName: String {
+        let components = (name as NSString).components(separatedBy: " ")
+        return components.first ?? ""
+    }
+    var lastName: String {
+        let components = (name as NSString).components(separatedBy: " ")
+        return components.last ?? ""
+    }
     
     init(userInformation: [String : Any]) {
         email = userInformation["email"] as? String
-        id = userInformation["id"] as? String
+        name = userInformation["name"] as? String ?? ""
     }
+    
     
 }

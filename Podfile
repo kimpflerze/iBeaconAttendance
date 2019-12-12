@@ -7,6 +7,13 @@ target 'iBeaconAttendance' do
 
   # Pods for iBeaconAttendance
   pod 'Firebase/Analytics'
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
+
+  # Optionally, include the Swift extensions if you're using Swift.
+  pod 'FirebaseFirestoreSwift'
+
+  pod 'FirebaseAuth'
 
   target 'iBeaconAttendanceTests' do
     inherit! :search_paths

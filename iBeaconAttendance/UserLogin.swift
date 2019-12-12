@@ -28,7 +28,7 @@ class UserLogin {
     // Function for making login request to the back-end.
     func login(username: String!, password: String!) -> Bool {
         
-        
+        User.shared.email = username
         
         // Some logic to make request to back end.
         //

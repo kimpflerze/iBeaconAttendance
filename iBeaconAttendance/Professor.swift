@@ -8,9 +8,7 @@
 
 import Foundation
 
-class Professor {
-    var name: String? = nil
-    var identifier: String? = nil
+class Professor: User {
     var uuid: String? = nil
     var major: Int? = nil
     var minor: Int? = nil
@@ -21,8 +19,8 @@ class Professor {
     var lostConnectionTimer: Int = 30
     
     init(information: [String : Any]) {
-        name = information["name"] as? String
-        identifier = information["identifier"] as? String
+        super.init(userInformation: information)
+        
         uuid = information["uuid"] as? String
         if let tempString = information["major"] as? String, let tempInt = Int(tempString) {
           major = tempInt

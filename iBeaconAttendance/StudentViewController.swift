@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class StudentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -18,20 +19,29 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     let notificationCenter = NotificationCenter.default
     
     //var discoveredBeaconIdentifiers: [String] = []
-    var discoveredProfessorBeacons: [Professor] = []
+    var discoveredProfessorBeacons: [[String : Any]] = []
+    var sortedBeacons: [[String:Any]] {
+        return discoveredProfessorBeacons.sorted { (beaconOne, beaconTwo) -> Bool in
+            let professorOne = (beaconOne["professor"] as? Professor)?.lastName ?? ""
+            let professorTwo = (beaconTwo["professor"] as? Professor)?.lastName ?? ""
+            return professorOne < professorTwo
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        listener = TransmitterListener()
+        listener = TransmitterListener.shared
+        listener?.callback = onDidReceiveData
         listener?.toggleListening()
         
         beaconingProfessorsTable.delegate = self
         beaconingProfessorsTable.dataSource = self
         
         //Notification center for detecting new professor beacon.
-        notificationCenter.addObserver(self, selector: #selector(StudentViewController.onDidReceiveData), name: .discoveredNewBeacon, object: nil)
+        //notificationCenter.addObserver(self, selector: #selector(StudentViewController.onDidReceiveData), name: .discoveredNewBeacon, object: nil)
         
         //Visual changes
         logoutButton.layer.cornerRadius = 10
@@ -45,7 +55,7 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func identifierIsDiscovered(identifier: String) -> Bool {
         for professor in discoveredProfessorBeacons {
-            if(professor.identifier == identifier) {
+            if((professor["professor"] as? Professor)?.email == identifier) {
                 return true
             }
         }
@@ -53,40 +63,16 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
         return false
     }
     
-    @objc func onDidReceiveData(_ notification:Notification) {
-        // Do something now
-        let userInfo = notification.userInfo
-        let identifier = userInfo?["identifier"] as! String
-        let newProfessor = userInfo?["professor"] as! Professor
-        
-        // Fetch the Professor's name associated with the received identifier.
-        
-        // Append the Professor's name into the table, instead of the identifier.
-        /*
-        if(!discoveredBeaconIdentifiers.contains(identifier)) {
-            discoveredBeaconIdentifiers.append(identifier)
-            
-            beaconingProfessorsTable.beginUpdates()
-            beaconingProfessorsTable.insertRows(at: [
-                (NSIndexPath(row: discoveredBeaconIdentifiers.count-1, section: 0) as IndexPath)], with: .automatic)
-            beaconingProfessorsTable.endUpdates()
-        }
-        */
-        if(!identifierIsDiscovered(identifier: identifier)) {
-            discoveredProfessorBeacons.append(newProfessor)
-            
-            beaconingProfessorsTable.beginUpdates()
-            beaconingProfessorsTable.insertRows(at: [
-                (NSIndexPath(row: discoveredProfessorBeacons.count-1, section: 0) as IndexPath)], with: .automatic)
-            beaconingProfessorsTable.endUpdates()
-        }
+    @objc func onDidReceiveData(_ notification:Array<Dictionary<String,Any>>) {
+        discoveredProfessorBeacons = notification
+        beaconingProfessorsTable.reloadData()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         listener?.toggleListening()
         listener = nil
 
-        NotificationCenter.default.removeObserver(notificationCenter)
+        //NotificationCenter.default.removeObserver(notificationCenter)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -102,7 +88,7 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "beaconingProfessorCell")!
             
         //let text = discoveredBeaconIdentifiers[indexPath.row]
-        let text = discoveredProfessorBeacons[indexPath.row].identifier
+        let text = (sortedBeacons[indexPath.row]["professor"] as? Professor)?.name
             
         cell.textLabel?.text = text
             
@@ -110,14 +96,40 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            
-        let alertController = UIAlertController(title: "Hint", message: "You have selected row \(indexPath.row).", preferredStyle: .alert)
-            
-        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-            
-        alertController.addAction(alertAction)
-            
-        present(alertController, animated: true, completion: nil)
+        //Make async call to mark present
+        
+        //Timestamp, StudentID, ProfessorID, className, BeaconID,
+        let db = Firestore.firestore()
+        
+        var ref: DocumentReference? = nil
+        
+        let information = discoveredProfessorBeacons[indexPath.row]
+        
+        let documentRefString = db.collection("Users").document(User.shared.email ?? "")
+        let studentRef = db.document(documentRefString.path)
+        
+        ref = db.collection("Logs").addDocument(data: [
+            "timestamp": Date().timeIntervalSince1970,
+            "studentRef": studentRef,
+            "professorRef": information["professorRef"] ?? "",
+            "className": information["className"] ?? "",
+            "beaconRef": information["beaconRef"] ?? ""
+        ]) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            } else {
+                print("Document added with ID: \(ref!.documentID)")
+                
+                let alertController = UIAlertController(title: "Notice", message: "You have been marked present in \((information["professor"] as? Professor)?.name ?? "nil")'s course, \(information["className"] ?? "nil").", preferredStyle: .alert)
+                    
+                let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+                    
+                alertController.addAction(alertAction)
+                    
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
     }
     
     @IBAction func studentLogoutAction(_ sender: Any) {

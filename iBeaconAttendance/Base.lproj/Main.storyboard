@@ -115,12 +115,12 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="7rf-DJ-Tky">
                                 <rect key="frame" x="60" y="371" width="294" height="100"/>
                                 <subviews>
-                                    <textField contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Example Email" borderStyle="roundedRect" placeholder="Username/Email" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="UYf-08-Yzq">
+                                    <textField contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="kimpflerze@gmail.com" borderStyle="roundedRect" placeholder="Username/Email" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="UYf-08-Yzq">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Example Password" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="IkT-FG-UMG">
+                                    <textField contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Example Password" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="IkT-FG-UMG">
                                         <rect key="frame" x="0.0" y="66" width="294" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -271,13 +271,15 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="BbC-m3-IEK">
                                 <rect key="frame" x="60" y="371" width="294" height="100"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Example Email" borderStyle="roundedRect" placeholder="Username/Email" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0eL-d3-WjN">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="tnadeem@vcu.edu" borderStyle="roundedRect" placeholder="Username/Email" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="0eL-d3-WjN">
                                         <rect key="frame" x="0.0" y="0.0" width="294" height="34"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Example Password" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iuC-8M-ha2">
                                         <rect key="frame" x="0.0" y="66" width="294" height="34"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
@@ -337,17 +339,24 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8SI-HZ-h2f" userLabel="Course Stack View">
                                         <rect key="frame" x="0.0" y="42.5" width="350" height="34"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="CMSC101" borderStyle="roundedRect" placeholder="Course Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="HTu-c1-Kqd">
-                                                <rect key="frame" x="0.0" y="0.0" width="285" height="34"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="CMSC101" borderStyle="roundedRect" placeholder="Course Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="HTu-c1-Kqd">
+                                                <rect key="frame" x="0.0" y="0.0" width="116" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             </textField>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Z5T-bg-Ejx">
-                                                <rect key="frame" x="301" y="0.0" width="51" height="34"/>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Z5T-bg-Ejx">
+                                                <rect key="frame" x="132" y="0.0" width="51" height="34"/>
                                                 <connections>
                                                     <action selector="transmissionAction:" destination="asA-q9-sEv" eventType="valueChanged" id="5il-D0-pu7"/>
                                                 </connections>
                                             </switch>
+                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHr-ER-Ncg">
+                                                <rect key="frame" x="197" y="0.0" width="153" height="34"/>
+                                                <state key="normal" title="Refresh View"/>
+                                                <connections>
+                                                    <action selector="reloadTable:" destination="asA-q9-sEv" eventType="touchUpInside" id="8xo-N1-3bJ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -384,10 +393,15 @@
                                     <action selector="toStudentLoginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J99-9X-d4D"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="YkP-4c-bBY">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="R89-0E-P2g" firstAttribute="leading" secondItem="e0E-ME-7lE" secondAttribute="leading" constant="60" id="3jc-79-2jT"/>
+                            <constraint firstAttribute="bottom" secondItem="YkP-4c-bBY" secondAttribute="bottom" id="9FR-0p-BAH"/>
+                            <constraint firstItem="YkP-4c-bBY" firstAttribute="top" secondItem="bQO-C0-tAK" secondAttribute="top" id="9Ql-rQ-Qv9"/>
                             <constraint firstItem="S78-iY-RrJ" firstAttribute="top" secondItem="bQO-C0-tAK" secondAttribute="top" id="A8B-SS-fgJ"/>
                             <constraint firstItem="NaY-oW-w3y" firstAttribute="top" secondItem="e0E-ME-7lE" secondAttribute="top" constant="32" id="Bnq-NO-4Fe"/>
                             <constraint firstAttribute="bottom" secondItem="S78-iY-RrJ" secondAttribute="bottom" id="ILb-Bh-rVJ"/>
@@ -399,12 +413,15 @@
                             <constraint firstItem="e0E-ME-7lE" firstAttribute="trailing" secondItem="Kxz-cw-wEC" secondAttribute="trailing" constant="32" id="fPp-xd-bTR"/>
                             <constraint firstItem="Kxz-cw-wEC" firstAttribute="top" secondItem="NaY-oW-w3y" secondAttribute="bottom" constant="32" id="mEv-zd-3LH"/>
                             <constraint firstAttribute="bottomMargin" secondItem="R89-0E-P2g" secondAttribute="bottom" constant="32" id="wj2-av-0aB"/>
+                            <constraint firstItem="e0E-ME-7lE" firstAttribute="trailing" secondItem="YkP-4c-bBY" secondAttribute="trailing" id="wmd-5Q-nTi"/>
                             <constraint firstItem="R89-0E-P2g" firstAttribute="top" secondItem="Kxz-cw-wEC" secondAttribute="bottom" constant="32" id="xdv-Fa-eYb"/>
+                            <constraint firstItem="YkP-4c-bBY" firstAttribute="leading" secondItem="e0E-ME-7lE" secondAttribute="leading" id="xfs-hY-MJG"/>
                             <constraint firstItem="e0E-ME-7lE" firstAttribute="trailing" secondItem="NaY-oW-w3y" secondAttribute="trailing" constant="32" id="xo4-g8-S0E"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e0E-ME-7lE"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="YkP-4c-bBY" id="WhL-bf-6D2"/>
                         <outlet property="courseNameTextfield" destination="HTu-c1-Kqd" id="L96-Iw-nr4"/>
                         <outlet property="logoutButton" destination="R89-0E-P2g" id="Ee2-lQ-v8j"/>
                         <outlet property="presentStudentsTable" destination="Kxz-cw-wEC" id="k8e-wb-G2I"/>
@@ -421,6 +438,6 @@
         <image name="white-clouds" width="333.33334350585938" height="333.33334350585938"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rNY-ag-6Je"/>
+        <segue reference="uQW-NM-TEl"/>
     </inferredMetricsTieBreakers>
 </document>

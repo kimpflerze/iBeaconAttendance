@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -106,7 +106,6 @@
 				CAF6F96F0CE4DAC9AFF0587F /* Pods-iBeaconAttendanceTests.debug.xcconfig */,
 				AAD7497EC039193A9DCF8D30 /* Pods-iBeaconAttendanceTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -140,7 +139,6 @@
 				EA2DEA4C237DFB5B00AE0E60 /* StudentViewController.swift */,
 				EA2DEA4E237DFB6400AE0E60 /* ProfessorViewController.swift */,
 				EA2DEA28237C92AF00AE0E60 /* Main.storyboard */,
-				EA2DEA502381DE1400AE0E60 /* UserLogin.swift */,
 				EA2DEA522382E08A00AE0E60 /* TransmitterListener.swift */,
 				EA2DEA2B237C92B100AE0E60 /* Assets.xcassets */,
 				EA2DEA2D237C92B100AE0E60 /* LaunchScreen.storyboard */,
@@ -148,6 +146,7 @@
 				EACECC60239C2965002CAEAB /* Student.swift */,
 				EACECC62239C296E002CAEAB /* Professor.swift */,
 				EACECC64239FED3C002CAEAB /* User.swift */,
+				EA2DEA502381DE1400AE0E60 /* UserLogin.swift */,
 				EACECC6623A00461002CAEAB /* Utilities.swift */,
 				EACECC6823A00FA2002CAEAB /* BackendStructure.md */,
 				EACECC6923A0499E002CAEAB /* GoogleService-Info.plist */,

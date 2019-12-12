@@ -9,9 +9,16 @@
 import Foundation
 import CoreLocation
 import CoreBluetooth
+import FirebaseFirestore
+
+typealias Callback = (Array<Dictionary<String,Any>>) -> Void
 
 class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationManagerDelegate {
 
+    static var shared = TransmitterListener()
+    
+    var callback: Callback? = nil
+    
     // shared
     let proximityUUID =  UUID(uuidString: "39ED98FF-2900-441A-802F-9C398FC199D2")
     let beaconID = "com.example.myDeviceRegion"
@@ -27,7 +34,7 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
     let minor : CLBeaconMinorValue = 1
     
     //private var detectedBeacons = [String : [String : String]]()
-    private var detectedProfessorBeacons: [String : Professor] = [String : Professor]()
+    private var detectedProfessorBeacons: [String : Any] = [String : Any]()
     
     lazy var transBeaconRegion: CLBeaconRegion? = {
         return CLBeaconRegion(proximityUUID: proximityUUID!,
@@ -45,10 +52,12 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
                               identifier: beaconID)
     }()
     
+    /*
     func getDetectedBeacons() -> [String : Professor] {
         return detectedProfessorBeacons
     }
-
+    */
+ 
     // Start/stop transmitting
     func toggleTransmitting() {
         if let manager = peripheralManager {
@@ -123,37 +132,79 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
                          didRangeBeacons beacons: [CLBeacon],
                          in region: CLBeaconRegion) {
         
-        beacons.forEach {
-            let identifier = "\($0.major).\($0.minor)"
+        detectedProfessorBeacons.removeAll()
+        
+        guard (beacons.count > 0) else {
+            callback?([])
+            return
+        }
+        
+        beacons.forEach{ beacon in
+            let identifier = "\(beacon.major):\(beacon.minor)"
             var information: [String : String] = [:]
             var professor: Professor = Professor(information: information)
             
             if #available(iOS 13.0, *) {
                 //print("\($0.uuid) \($0.major) \($0.minor) \($0.proximity) \($0.timestamp)")
-                let uuid = "\($0.uuid)"
-                let major = "\($0.major)"
-                let minor = "\($0.minor)"
-                let proximity = "\($0.proximity)"
-                let timestamp = "\($0.timestamp)"
+                let uuid = "\(beacon.uuid)"
+                let major = "\(beacon.major)"
+                let minor = "\(beacon.minor)"
+                let proximity = "\(beacon.proximity)"
+                let timestamp = "\(beacon.timestamp)"
                 information = ["uuid": uuid, "major": major, "minor": minor, "proximity": proximity, "timestamp": timestamp, "identifier": identifier]
                 professor = Professor(information: information)
                 //detectedBeacons[identifier] = information
-                detectedProfessorBeacons[identifier] = professor
+                
             } else {
                 //print("\($0.proximityUUID) \($0.major) \($0.minor) \($0.proximity)")
-                let uuid = "\($0.proximityUUID)"
-                let major = "\($0.major)"
-                let minor = "\($0.minor)"
-                let proximity = "\($0.proximity)"
+                let uuid = "\(beacon.proximityUUID)"
+                let major = "\(beacon.major)"
+                let minor = "\(beacon.minor)"
+                let proximity = "\(beacon.proximity)"
                 information = ["uuid": uuid, "major": major, "minor": minor, "proximity": proximity, "identifier": identifier]
                 professor = Professor(information: information)
                 //detectedBeacons[identifier] = information
-                detectedProfessorBeacons[identifier] = professor
+                
             }
             
             //Make asynchronous call to back-end now to fetch name.
             //Post to notification center after return.
-            NotificationCenter.default.post(name: .discoveredNewBeacon, object: nil, userInfo: ["identifier": identifier, "professor" : professor])
+            let db = Firestore.firestore()
+            
+            let docRef = db.collection("Beacons").document(identifier)
+
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    
+                    guard var params = document.data() else {
+                        return
+                    }
+                    
+                    (document.data()?["professorRef"] as? DocumentReference)?.getDocument { (document, error) in
+                        if let document = document, document.exists {
+                            
+                            professor.name = document.data()?["name"] as? String ?? ""
+                            
+                        } else {
+                            print("Inner document does not exist")
+                        }
+                        
+                        params["professorRef"] = (params["professorRef"] as? DocumentReference)?.documentID
+                        params["professor"] = professor
+                        params["beaconRef"] = identifier
+                        
+                        self.detectedProfessorBeacons[identifier] = params
+                        
+                        if let parameterArray = self.detectedProfessorBeacons.values.map({ $0 }) as? Array<Dictionary<String,Any>> {
+                            self.callback?(parameterArray)
+                        }
+                        
+                        //NotificationCenter.default.post(name: .discoveredNewBeacon, object: nil, userInfo: ["identifier": identifier, "professor" : professor])
+                    }
+                } else {
+                    print("Document does not exist")
+                }
+            }
         }
         
     }
