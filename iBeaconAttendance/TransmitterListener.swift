@@ -12,12 +12,14 @@ import CoreBluetooth
 import FirebaseFirestore
 
 typealias Callback = (Array<Dictionary<String,Any>>) -> Void
+typealias BeaconCallback = (Dictionary<String,String>) -> Void
 
 class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationManagerDelegate {
 
     static var shared = TransmitterListener()
     
-    var callback: Callback? = nil
+    var newBeaconDataCallback: Callback? = nil
+    var beaconReadyCallback: BeaconCallback? = nil
     
     // shared
     let proximityUUID =  UUID(uuidString: "39ED98FF-2900-441A-802F-9C398FC199D2")
@@ -30,8 +32,8 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
     var beaconPeripheralData: NSDictionary? = nil
     
     // Max Value: 65535
-    let major : CLBeaconMajorValue = 100
-    let minor : CLBeaconMinorValue = 1
+    var major : CLBeaconMajorValue = 100
+    var minor : CLBeaconMinorValue = 1
     
     //private var detectedBeacons = [String : [String : String]]()
     private var detectedProfessorBeacons: [String : Any] = [String : Any]()
@@ -135,7 +137,7 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
         detectedProfessorBeacons.removeAll()
         
         guard (beacons.count > 0) else {
-            callback?([])
+            newBeaconDataCallback?([])
             return
         }
         
@@ -196,10 +198,9 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
                         self.detectedProfessorBeacons[identifier] = params
                         
                         if let parameterArray = self.detectedProfessorBeacons.values.map({ $0 }) as? Array<Dictionary<String,Any>> {
-                            self.callback?(parameterArray)
+                            self.newBeaconDataCallback?(parameterArray)
                         }
                         
-                        //NotificationCenter.default.post(name: .discoveredNewBeacon, object: nil, userInfo: ["identifier": identifier, "professor" : professor])
                     }
                 } else {
                     print("Document does not exist")
@@ -213,6 +214,70 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
         guard peripheral.state == .poweredOn else { return }
         print("Transmitting on!")
         peripheral.startAdvertising(beaconPeripheralData as? [String: Any])
+    }
+    
+    func getBeaconInformationAndToggleTransmitting(className: String, professorEmail: String) {
+        let db = Firestore.firestore()
+        
+        let documentRefString = db.collection("Users").document(User.shared.email ?? "")
+        let professorRef = db.document(documentRefString.path)
+        
+        db.collection("Beacons")
+            .whereField("className", isEqualTo: className)
+            .whereField("professorRef", isEqualTo: professorRef)
+            .getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting existing Beacon documents for getBeaconInformationAndToggleTransmitting: \(err)")
+                } else {
+                    let documents = querySnapshot!.documents
+                    
+                    if(documents.count > 0) {
+                        for document in documents {
+                            print(" Found existing beacon for \(professorEmail) in class \(className): \(document.documentID)")
+                            let components = document.documentID.split(separator: ":")
+                            
+                            let majorString = String(components.first ?? "")
+                            let minorString = String(components.last ?? "")
+                            
+                            self.major = CLBeaconMajorValue(majorString) ?? 0
+                            self.minor = CLBeaconMinorValue(minorString) ?? 0
+                        }
+                        
+                        //self.toggleTransmitting()
+                        self.beaconReadyCallback?(["major": self.major.description, "minor": self.minor.description, "className": className, "newEntry": "0"])
+                    }
+                    else {
+                        //Professor doesnt have beacon number for the class.
+                        print("Couldn't find existing beacon for \(professorEmail) in class \(className)")
+                        
+                        //Pull the value from the currentBeaconMajor document in Beacons collection
+                        let currentBeaconMajorRef = db.collection("Beacons").document("currentBeaconMajor")
+
+                        currentBeaconMajorRef.getDocument { (document, error) in
+                            if let document = document, document.exists {
+                                let data = document.data().map(String.init(describing:)) ?? "nil"
+                                print("Current beacon major value: \(data)")
+                                
+                                let majorString = String()
+                                
+                                self.major = CLBeaconMajorValue(majorString) ?? 0
+                                
+                                //Increment the currentBeaconMajor document in Beacons collection
+                                currentBeaconMajorRef.updateData([
+                                    "value": FieldValue.increment(Int64(1))
+                                ])
+                                
+                                //self.toggleTransmitting()
+                                self.beaconReadyCallback?(["major": self.major.description, "minor": self.minor.description, "className": className, "newEntry": "1"])
+                            } else {
+                                print("Document does not exist")
+                            }
+                        }
+                        
+                    }
+                }
+        }
+        
     }
     
 }

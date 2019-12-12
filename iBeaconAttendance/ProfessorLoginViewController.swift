@@ -10,6 +10,7 @@ import UIKit
 
 class ProfessorLoginViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var signUpSignInSegmentControl: UISegmentedControl!
     @IBOutlet weak var professorUsernameTextfield: UITextField!
     @IBOutlet weak var professorPasswordTextfield: UITextField!
     @IBOutlet weak var professorLoginButton: UIButton!
@@ -35,6 +36,11 @@ class ProfessorLoginViewController: UIViewController, UITextFieldDelegate {
             
             self.present(invalidLoginAlert, animated: true)
         }
+    }
+    
+    @IBAction func signUpSignInAction(_ sender: Any) {
+        //Set action result variable here!
+        
     }
     
     func clearInputFields(){

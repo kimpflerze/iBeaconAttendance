@@ -9,10 +9,7 @@ target 'iBeaconAttendance' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
-
-  # Optionally, include the Swift extensions if you're using Swift.
   pod 'FirebaseFirestoreSwift'
-
   pod 'FirebaseAuth'
 
   target 'iBeaconAttendanceTests' do

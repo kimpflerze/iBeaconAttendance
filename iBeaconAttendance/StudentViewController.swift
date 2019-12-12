@@ -16,8 +16,6 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var listener: TransmitterListener? = nil
     
-    let notificationCenter = NotificationCenter.default
-    
     //var discoveredBeaconIdentifiers: [String] = []
     var discoveredProfessorBeacons: [[String : Any]] = []
     var sortedBeacons: [[String:Any]] {
@@ -34,7 +32,7 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         // Do any additional setup after loading the view.
         listener = TransmitterListener.shared
-        listener?.callback = onDidReceiveData
+        listener?.newBeaconDataCallback = onDidReceiveData
         listener?.toggleListening()
         
         beaconingProfessorsTable.delegate = self

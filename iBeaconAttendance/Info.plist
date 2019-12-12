@@ -38,6 +38,8 @@
 	<string>This application uses iBeacon technology to function, therefore, access to your Bluetooth hardware is required!</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This application uses iBeacon technology to function, therefore, access to your Bluetooth hardware is required!</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This application uses iBeacon technology to function, therefore, access to your Bluetooth hardware is required!</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>

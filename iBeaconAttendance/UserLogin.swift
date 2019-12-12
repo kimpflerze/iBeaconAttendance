@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 class UserLogin {
     
@@ -25,6 +26,13 @@ class UserLogin {
         
     }
     
+    func getFormattedCredentials(username: String!, password: String!) -> Dictionary<String,String> {
+        let modifiedUsername = username.trimmingCharacters(in: .whitespacesAndNewlines)
+        let modifiedPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return ["username": modifiedUsername, "password": modifiedPassword]
+    }
+    
     // Function for making login request to the back-end.
     func login(username: String!, password: String!) -> Bool {
         
@@ -36,6 +44,16 @@ class UserLogin {
         // Return false if credentials don't match any user's.
         
         return true
+    }
+    
+    func createUser(email: String, password: String, _ callback: ((Error?) -> ())? = nil){
+          Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+              if let e = error{
+                  callback?(e)
+                  return
+              }
+              callback?(nil)
+          }
     }
     
 }

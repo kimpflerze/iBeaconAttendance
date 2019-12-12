@@ -98,6 +98,9 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white-clouds" translatesAutoresizingMaskIntoConstraints="NO" id="STx-IX-NgD" userLabel="Background Image View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsN-So-F6U">
                                 <rect key="frame" x="60" y="722" width="294" height="54"/>
                                 <color key="backgroundColor" red="0.19141237110000001" green="0.42365533970000002" blue="0.45272871380000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -127,9 +130,16 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white-clouds" translatesAutoresizingMaskIntoConstraints="NO" id="STx-IX-NgD" userLabel="Background Image View">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                            </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dz6-ZJ-Zi3">
+                                <rect key="frame" x="139.5" y="290" width="135" height="32"/>
+                                <segments>
+                                    <segment title="Sign Up"/>
+                                    <segment title="Sign In"/>
+                                </segments>
+                                <connections>
+                                    <action selector="signUpSignInAction:" destination="T2c-JP-8YT" eventType="valueChanged" id="N8d-ym-ocs"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -140,11 +150,13 @@
                             <constraint firstItem="STx-IX-NgD" firstAttribute="top" secondItem="1So-Xf-b52" secondAttribute="top" id="EqV-rq-XTM"/>
                             <constraint firstItem="STx-IX-NgD" firstAttribute="leading" secondItem="eC2-hj-mbc" secondAttribute="leading" id="Ol5-HN-tKe"/>
                             <constraint firstItem="7rf-DJ-Tky" firstAttribute="centerY" secondItem="1So-Xf-b52" secondAttribute="centerY" id="QCN-Dt-Ni3"/>
+                            <constraint firstItem="7rf-DJ-Tky" firstAttribute="top" secondItem="dz6-ZJ-Zi3" secondAttribute="bottom" constant="50" id="W5X-AF-uHe"/>
                             <constraint firstItem="eC2-hj-mbc" firstAttribute="trailing" secondItem="7rf-DJ-Tky" secondAttribute="trailing" constant="60" id="dkZ-oy-6Hc"/>
                             <constraint firstItem="7rf-DJ-Tky" firstAttribute="centerX" secondItem="1So-Xf-b52" secondAttribute="centerX" id="f0d-tG-wXe"/>
                             <constraint firstItem="zsN-So-F6U" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eC2-hj-mbc" secondAttribute="leading" constant="60" id="gvM-E1-vcu"/>
                             <constraint firstItem="eC2-hj-mbc" firstAttribute="trailing" secondItem="STx-IX-NgD" secondAttribute="trailing" id="jxk-EP-wmM"/>
                             <constraint firstAttribute="bottom" secondItem="STx-IX-NgD" secondAttribute="bottom" id="kiO-YZ-90o"/>
+                            <constraint firstItem="dz6-ZJ-Zi3" firstAttribute="centerX" secondItem="1So-Xf-b52" secondAttribute="centerX" id="mnj-kc-nxO"/>
                             <constraint firstItem="7rf-DJ-Tky" firstAttribute="leading" secondItem="eC2-hj-mbc" secondAttribute="leading" constant="60" id="omg-9d-u0I"/>
                             <constraint firstItem="pZP-25-PHW" firstAttribute="top" secondItem="eC2-hj-mbc" secondAttribute="top" constant="32" id="rps-jp-OKY"/>
                         </constraints>
@@ -152,6 +164,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="JHg-Bn-aXB"/>
                     <connections>
+                        <outlet property="signUpSignInSegmentControl" destination="dz6-ZJ-Zi3" id="rUy-7F-Pwp"/>
                         <outlet property="studentLoginButton" destination="zsN-So-F6U" id="VbL-iK-oPb"/>
                         <outlet property="studentPasswordTextfield" destination="IkT-FG-UMG" id="Mnj-yN-hde"/>
                         <outlet property="studentUsernameTextfield" destination="UYf-08-Yzq" id="0KW-uP-I1h"/>
@@ -285,9 +298,20 @@
                                     </textField>
                                 </subviews>
                             </stackView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Dhu-jQ-njo">
+                                <rect key="frame" x="139.5" y="290" width="135" height="32"/>
+                                <segments>
+                                    <segment title="Sign Up"/>
+                                    <segment title="Sign In"/>
+                                </segments>
+                                <connections>
+                                    <action selector="signUpSignInAction:" destination="Svs-1v-Al7" eventType="valueChanged" id="wwr-uI-XWo"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="BbC-m3-IEK" firstAttribute="top" secondItem="Dhu-jQ-njo" secondAttribute="bottom" constant="50" id="1BS-D7-66D"/>
                             <constraint firstItem="9gf-or-046" firstAttribute="trailing" secondItem="qgU-6a-NWo" secondAttribute="trailing" id="5qA-WS-cjd"/>
                             <constraint firstItem="qgU-6a-NWo" firstAttribute="bottom" secondItem="GDJ-zS-ZPO" secondAttribute="bottom" constant="32" id="Fs3-yE-MZk"/>
                             <constraint firstItem="RXw-aW-7d1" firstAttribute="centerX" secondItem="9iz-v9-X26" secondAttribute="centerX" id="K5U-vv-y8I"/>
@@ -301,6 +325,7 @@
                             <constraint firstItem="9gf-or-046" firstAttribute="top" secondItem="9iz-v9-X26" secondAttribute="top" id="p1S-Yn-hkp"/>
                             <constraint firstItem="RXw-aW-7d1" firstAttribute="top" secondItem="qgU-6a-NWo" secondAttribute="top" constant="32" id="sAC-so-hn6"/>
                             <constraint firstItem="9gf-or-046" firstAttribute="leading" secondItem="qgU-6a-NWo" secondAttribute="leading" id="w5g-cn-TxX"/>
+                            <constraint firstItem="Dhu-jQ-njo" firstAttribute="centerX" secondItem="9iz-v9-X26" secondAttribute="centerX" id="wo2-v7-eom"/>
                             <constraint firstItem="BbC-m3-IEK" firstAttribute="centerY" secondItem="9iz-v9-X26" secondAttribute="centerY" id="yUR-y7-zrz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qgU-6a-NWo"/>
@@ -309,6 +334,7 @@
                         <outlet property="professorLoginButton" destination="GDJ-zS-ZPO" id="gSw-eU-bTV"/>
                         <outlet property="professorPasswordTextfield" destination="iuC-8M-ha2" id="xJz-0j-Yvm"/>
                         <outlet property="professorUsernameTextfield" destination="0eL-d3-WjN" id="kXk-Eh-mV5"/>
+                        <outlet property="signUpSignInSegmentControl" destination="Dhu-jQ-njo" id="Wxu-Uy-a68"/>
                         <segue destination="asA-q9-sEv" kind="presentation" identifier="professorLoginToProfessorViewSegway" modalPresentationStyle="fullScreen" id="jOL-F2-dpX"/>
                     </connections>
                 </viewController>

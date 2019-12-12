@@ -9,7 +9,15 @@
 import UIKit
 
 class StudentLoginViewController: UIViewController, UITextFieldDelegate {
+    
+    enum AuthenticationOption {
+        case signUp
+        case signIn
+    }
+    
+    var authenticationOption = AuthenticationOption.signUp
 
+    @IBOutlet weak var signUpSignInSegmentControl: UISegmentedControl!
     @IBOutlet weak var studentUsernameTextfield: UITextField!
     @IBOutlet weak var studentPasswordTextfield: UITextField!
     @IBOutlet weak var studentLoginButton: UIButton!
@@ -18,8 +26,21 @@ class StudentLoginViewController: UIViewController, UITextFieldDelegate {
         let username: String! = studentUsernameTextfield.text
         let password: String! = studentPasswordTextfield.text
         
+        
         let credentialsFormatValid = UserLogin().validateInputCredential(username: username, password: password)
+        let formattedCredentials = UserLogin().getFormattedCredentials(username: username, password: password)
         let loginResult = UserLogin().login(username: username, password: password)
+        
+        /*
+        if(authenticationOption == AuthenticationOption.signUp && credentialsFormatValid) {
+            //Sign up, create new user.
+            UserLogin().createUser(email: username, password: password)
+        }
+        else {
+            //Sign in.
+        }
+        */
+        
         
         if(credentialsFormatValid && loginResult) {
             //Successful login, segway.
@@ -34,6 +55,17 @@ class StudentLoginViewController: UIViewController, UITextFieldDelegate {
             invalidLoginAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             
             self.present(invalidLoginAlert, animated: true)
+        }
+        
+    }
+    
+    @IBAction func signUpSignInAction(_ sender: Any) {
+        //Set action result variable here!
+        if(signUpSignInSegmentControl.selectedSegmentIndex == 0) {
+            authenticationOption = AuthenticationOption.signUp
+        }
+        else {
+            authenticationOption = AuthenticationOption.signIn
         }
     }
     
@@ -57,6 +89,7 @@ class StudentLoginViewController: UIViewController, UITextFieldDelegate {
         //Visual changes.
         studentLoginButton.layer.cornerRadius = 10
         studentLoginButton.clipsToBounds = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

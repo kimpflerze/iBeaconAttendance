@@ -41,7 +41,7 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
     }
     
     @IBAction func transmissionAction(_ sender: Any) {
-        transmitter?.toggleTransmitting()
+        //transmitter?.toggleTransmitting()
         
         //Check if courseNameTextfield is empty before beginning transmission.
         guard let className = courseNameTextfield.text, !className.isEmpty else {
@@ -65,23 +65,45 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
                 //I have some options here.
             
                 //TEMPORARY RESOLUTION, IMPLEMENT CLOUD FUNCTION HERE
-            let randomMinor = Int.random(in: 0..<65535)
-            let randomMajor = Int.random(in: 0..<65535)
-            let beaconIdentifier = "\(randomMajor):\(randomMinor)"
+            //let randomMinor = Int.random(in: 0..<65535)
+            //let randomMajor = Int.random(in: 0..<65535)
             
-            let db = Firestore.firestore()
             
-            let documentRefString = db.collection("Users").document(User.shared.email ?? "")
-            let professorRef = db.document(documentRefString.path)
+            //Check if the professor has a beacon for the class.
+            transmitter?.getBeaconInformationAndToggleTransmitting(className: className, professorEmail: User.shared.email ?? "")
             
-            //Save transmissionInformation - timestamp, beaconRef, professorRef as ID
-            transmissionInformation["professorRef"] = professorRef
-            transmissionInformation["minor"] = randomMinor
-            transmissionInformation["major"] = randomMajor
-            transmissionInformation["beaconRef"] = beaconIdentifier
-            transmissionInformation["timestamp"] = Date().timeIntervalSince1970
-            transmissionInformation["className"] = className
             
+            
+                //Create listener for new updates in Log collection on Firebase back-end.
+        }
+        else {
+            transmitter?.toggleTransmitting()
+        }
+        
+        //Turn off spinner wheel to show in-progress actions as complete.
+        
+        
+    }
+    
+    @objc func beaconInformationReady(information: Dictionary<String,String>) {
+        let db = Firestore.firestore()
+        
+        let documentRefString = db.collection("Users").document(User.shared.email ?? "")
+        let professorRef = db.document(documentRefString.path)
+        
+        let beaconIdentifier = "\(information["major"] ?? ""):\(information["minor"] ?? "")"
+        
+        //Save transmissionInformation - timestamp, beaconRef, professorRef as ID
+        transmissionInformation["professorRef"] = professorRef
+        transmissionInformation["major"] = information["major"]
+        transmissionInformation["minor"] = information["minor"]
+        transmissionInformation["beaconRef"] = beaconIdentifier
+        transmissionInformation["timestamp"] = Date().timeIntervalSince1970
+        transmissionInformation["className"] = information["className"]
+        
+        print("beaconInformationReadyCallback data: \(information["major"] ?? ""):\(information["minor"] ?? "") for class \(information["className"] ?? "")")
+        
+        if(information["newEntry"] == "1") {
             //Add beacon to the Beacon collection for students to reference.
             db.collection("Beacons").document(beaconIdentifier).setData([
                 "timestamp": transmissionInformation["timestamp"] ?? Date().timeIntervalSince1970,
@@ -91,25 +113,24 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
                 if let err = err {
                     print("Error writing document: \(err)")
                 } else {
-                    print("Document successfully written!")
+                    print("New beacon for \(User.shared.email ?? "") in class \(information["className"] ?? "") successfully created!")
                     
-                    //Do I want to create the listener here?
+                    self.transmitter?.toggleTransmitting()
+                    
+                    //Alert the user of transmission status toggle.
+                    let transmitterToggleAlert = UIAlertController(title: "Transmitter Status", message: "The transmitter status was toggled!", preferredStyle: .alert)
+                    
+                    transmitterToggleAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    
+                    self.present(transmitterToggleAlert, animated: true)
                 }
             }
-            
-                //Create listener for new updates in Log collection on Firebase back-end.
-            
-            
+        }
+        else {
+            //Else statement because if it is a new entry, we only want to begin transmitting once entry is added to Firestore
+            transmitter?.toggleTransmitting()
         }
         
-        //Turn off spinner wheel to show in-progress actions as complete.
-        
-        //Alert the user of transmission status toggle.
-        let transmitterToggleAlert = UIAlertController(title: "Transmitter Status", message: "The transmitter status was toggled!", preferredStyle: .alert)
-        
-        transmitterToggleAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        
-        self.present(transmitterToggleAlert, animated: true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -122,6 +143,7 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
 
         // Do any additional setup after loading the view.
         transmitter = TransmitterListener()
+        transmitter?.beaconReadyCallback = beaconInformationReady
         
         self.courseNameTextfield.delegate = self
         
