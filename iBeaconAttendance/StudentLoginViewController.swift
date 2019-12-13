@@ -27,21 +27,21 @@ class StudentLoginViewController: UIViewController, UITextFieldDelegate {
         let password: String! = studentPasswordTextfield.text
         
         
-        let credentialsFormatValid = UserLogin().validateInputCredential(username: username, password: password)
-        let formattedCredentials = UserLogin().getFormattedCredentials(username: username, password: password)
-        let loginResult = UserLogin().login(username: username, password: password)
+        let credentialsFormatValid = UserLogin().validateInputCredential(email: username, password: password)
+        //let formattedCredentials = UserLogin().getFormattedCredentials(email: username, password: password)
+        //let loginResult = UserLogin().login(username: username, password: password)
         
-        /*
+        
         if(authenticationOption == AuthenticationOption.signUp && credentialsFormatValid) {
             //Sign up, create new user.
-            UserLogin().createUser(email: username, password: password)
+            //UserLogin().createUser(email: formattedCredentials?["username"], password: formattedCredentials?["password"])
         }
         else {
             //Sign in.
         }
-        */
         
         
+        /*
         if(credentialsFormatValid && loginResult) {
             //Successful login, segway.
             performSegue(withIdentifier: "studentLoginToStudentViewSegway", sender: self)
@@ -56,7 +56,7 @@ class StudentLoginViewController: UIViewController, UITextFieldDelegate {
             
             self.present(invalidLoginAlert, animated: true)
         }
-        
+        */
     }
     
     @IBAction func signUpSignInAction(_ sender: Any) {

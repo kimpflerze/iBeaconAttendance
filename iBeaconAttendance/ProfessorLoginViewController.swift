@@ -16,10 +16,11 @@ class ProfessorLoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var professorLoginButton: UIButton!
     
     @IBAction func professorLoginAction(_ sender: Any) {
+        /*
         let username: String!  = professorUsernameTextfield.text
         let password: String!  = professorPasswordTextfield.text
         
-        let credentialsFormatValid = UserLogin().validateInputCredential(username: username, password: password)
+        let credentialsFormatValid = UserLogin().validateInputCredential(email: username, password: password)
         let loginResult = UserLogin().login(username: username, password: password)
         
         if(credentialsFormatValid && loginResult) {
@@ -36,6 +37,7 @@ class ProfessorLoginViewController: UIViewController, UITextFieldDelegate {
             
             self.present(invalidLoginAlert, animated: true)
         }
+        */
     }
     
     @IBAction func signUpSignInAction(_ sender: Any) {
