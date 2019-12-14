@@ -53,7 +53,7 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
                 }
                 else {
                     //Name format is invalid, present notice!
-                    
+                    presentAlert(title: "Notice", message: "Both the first name and last name input field require an input!")
                 }
 
             }
@@ -62,6 +62,10 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
                 //Sign in, get the result
                 _ = UserLogin().login(withEmail: tempEmail, password: tempPassword)
             }
+        }
+        
+        if(credentialsFormatValid == false) {
+            presentAlert(title: "Notice", message: "Both the email and password input field require an input!")
         }
     }
     
@@ -77,6 +81,8 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
                 constraint.constant = textFieldHeight
             }
             
+            firstNameTextfield.isHidden = false
+            lastNameTextfield.isHidden = false
             userTypeSegmentControl.isHidden = false
             
             let spacing = 16
@@ -99,6 +105,8 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
                 constraint.constant = 0.0
             }
             
+            firstNameTextfield.isHidden = true
+            lastNameTextfield.isHidden = true
             userTypeSegmentControl.isHidden = true
 
             let spacing = 0
@@ -122,6 +130,20 @@ class EntryViewController: UIViewController, UITextFieldDelegate {
         if let tempEmail = formattedCredentials?["email"], credentialsFormatValid {
             UserLogin().sendPasswordReset(withEmail: tempEmail)
         }
+    }
+    
+    func performSegwayWithIdentifier(identifier: String) {
+        performSegue(withIdentifier: identifier, sender: self)
+    }
+    
+    func presentAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+        let alertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+            
+        alertController.addAction(alertAction)
+            
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -129,11 +129,11 @@ class UserLogin {
                 //Segway to appropriate ViewController
                 if(type == 0) {
                     //Segway to studentViewController
-                    
+                    UIApplication.topViewController()?.performSegue(withIdentifier: "studentLoginSegway", sender: UIApplication.topViewController().self)
                 }
                 else {
                     //Segway to professorViewController
-                    
+                    UIApplication.topViewController()?.performSegue(withIdentifier: "professorLoginSegway", sender: UIApplication.topViewController().self)
                 }
                 
             }
@@ -141,6 +141,7 @@ class UserLogin {
     }
     
     func getUserName(email: String!) {
+        
         let db = Firestore.firestore()
         
         let docRef = db.collection("Users").document(email)
@@ -162,11 +163,11 @@ class UserLogin {
                 //Segway to appropriate ViewController
                 if(type == 0) {
                     //Segway to studentViewController
-                    
+                    UIApplication.topViewController()?.performSegue(withIdentifier: "studentLoginSegway", sender: UIApplication.topViewController().self)
                 }
                 else {
                     //Segway to professorViewController
-                    
+                    UIApplication.topViewController()?.performSegue(withIdentifier: "professorLoginSegway", sender: UIApplication.topViewController().self)
                 }
                 
             } else {
@@ -197,6 +198,17 @@ class UserLogin {
             }
         }
         
+    }
+    
+    func signOut() -> Bool {
+        do{
+            try Auth.auth().signOut()
+            User.shared.email = ""
+            User.shared.name = ""
+            return true
+        }catch{
+            return false
+        }
     }
     
     func displayErrorAlert(title: String, msg: String) {

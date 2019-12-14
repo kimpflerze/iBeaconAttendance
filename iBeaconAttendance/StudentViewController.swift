@@ -38,9 +38,6 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
         beaconingProfessorsTable.delegate = self
         beaconingProfessorsTable.dataSource = self
         
-        //Notification center for detecting new professor beacon.
-        //notificationCenter.addObserver(self, selector: #selector(StudentViewController.onDidReceiveData), name: .discoveredNewBeacon, object: nil)
-        
         //Visual changes
         logoutButton.layer.cornerRadius = 10
         logoutButton.clipsToBounds = true
@@ -68,9 +65,8 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidDisappear(_ animated: Bool) {
         listener?.toggleListening()
+        listener?.forceStopListening()
         listener = nil
-
-        //NotificationCenter.default.removeObserver(notificationCenter)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -103,13 +99,20 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let information = discoveredProfessorBeacons[indexPath.row]
         
-        let documentRefString = db.collection("Users").document(User.shared.email ?? "")
+        var documentRefString = db.collection("Users").document(User.shared.email ?? "")
         let studentRef = db.document(documentRefString.path)
+        
+        guard let professorEmail = information["professorRef"] as? String else {
+            return
+        }
+        
+        documentRefString = db.collection("Users").document(professorEmail)
+        let professorRef = db.document(documentRefString.path)
         
         ref = db.collection("Logs").addDocument(data: [
             "timestamp": Date().timeIntervalSince1970,
             "studentRef": studentRef,
-            "professorRef": information["professorRef"] ?? "",
+            "professorRef": professorRef,
             "className": information["className"] ?? "",
             "beaconRef": information["beaconRef"] ?? ""
         ]) { err in
@@ -131,7 +134,12 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func studentLogoutAction(_ sender: Any) {
-        performSegue(withIdentifier: "studentLogoutSegway", sender: self)
+        if(UserLogin().signOut()) {
+            performSegue(withIdentifier: "studentLogoutSegway", sender: self)
+        }
+        else {
+            UserLogin().displayErrorAlert(title: "Sign Out Error", msg: "There was an error while signing out, please try again.")
+        }
     }
     
 }

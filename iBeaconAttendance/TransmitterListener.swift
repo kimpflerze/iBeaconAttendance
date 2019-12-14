@@ -95,9 +95,7 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
         }
         
         if let regions = rangedRegions(), regions.count > 0 {
-            
             //Stop listening
-            
             regions.forEach { locationManager?.stopRangingBeacons(in: $0) }
             
             locationManager?.delegate = nil
@@ -105,19 +103,26 @@ class TransmitterListener: NSObject, CBPeripheralManagerDelegate, CLLocationMana
             listeningRegion = nil
         }
         else {
-            
             //Start listening
-            
             locationManager = CLLocationManager()
             locationManager?.delegate = self
             locationManager?.requestAlwaysAuthorization()
         }
+    }
+    
+    func forceStopListening() {
+        (self.locationManager?.rangedRegions as? Set<CLBeaconRegion>)?.forEach { locationManager?.stopRangingBeacons(in: $0) }
+            
+        locationManager?.delegate = nil
+        locationManager = nil
+        listeningRegion = nil
     }
         
     func locationManager(_ manager: CLLocationManager,
                          didChangeAuthorization status: CLAuthorizationStatus) {
         
         guard status == .authorizedAlways
+            || status == .authorizedWhenInUse
             && CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self)
             && CLLocationManager.isRangingAvailable() else { return }
         

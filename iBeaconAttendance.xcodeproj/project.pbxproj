@@ -9,14 +9,13 @@
 /* Begin PBXBuildFile section */
 		07E8FB36341AF8FD6BB4B2C9 /* Pods_iBeaconAttendanceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 537E4351C0EBCC2F11BB5755 /* Pods_iBeaconAttendanceTests.framework */; };
 		CB238E1A76629F3A89C998C2 /* Pods_iBeaconAttendance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E438AEB09E3C3409D4F866 /* Pods_iBeaconAttendance.framework */; };
+		EA1E9BA023A41B0B002CB71B /* ProfessorLogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1E9B9F23A41B0B002CB71B /* ProfessorLogsViewController.swift */; };
 		EA2DEA25237C92AF00AE0E60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA24237C92AF00AE0E60 /* AppDelegate.swift */; };
 		EA2DEA27237C92AF00AE0E60 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA26237C92AF00AE0E60 /* EntryViewController.swift */; };
 		EA2DEA2A237C92AF00AE0E60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2DEA28237C92AF00AE0E60 /* Main.storyboard */; };
 		EA2DEA2C237C92B100AE0E60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA2DEA2B237C92B100AE0E60 /* Assets.xcassets */; };
 		EA2DEA2F237C92B100AE0E60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA2DEA2D237C92B100AE0E60 /* LaunchScreen.storyboard */; };
 		EA2DEA3A237C92B200AE0E60 /* iBeaconAttendanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA39237C92B200AE0E60 /* iBeaconAttendanceTests.swift */; };
-		EA2DEA49237C9CB100AE0E60 /* StudentLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA48237C9CB100AE0E60 /* StudentLoginViewController.swift */; };
-		EA2DEA4B237C9CBA00AE0E60 /* ProfessorLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA4A237C9CBA00AE0E60 /* ProfessorLoginViewController.swift */; };
 		EA2DEA4D237DFB5B00AE0E60 /* StudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA4C237DFB5B00AE0E60 /* StudentViewController.swift */; };
 		EA2DEA4F237DFB6400AE0E60 /* ProfessorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA4E237DFB6400AE0E60 /* ProfessorViewController.swift */; };
 		EA2DEA512381DE1400AE0E60 /* UserLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2DEA502381DE1400AE0E60 /* UserLogin.swift */; };
@@ -45,6 +44,7 @@
 		AAD7497EC039193A9DCF8D30 /* Pods-iBeaconAttendanceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iBeaconAttendanceTests.release.xcconfig"; path = "Target Support Files/Pods-iBeaconAttendanceTests/Pods-iBeaconAttendanceTests.release.xcconfig"; sourceTree = "<group>"; };
 		CAF6F96F0CE4DAC9AFF0587F /* Pods-iBeaconAttendanceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iBeaconAttendanceTests.debug.xcconfig"; path = "Target Support Files/Pods-iBeaconAttendanceTests/Pods-iBeaconAttendanceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D1F1ACBA961709D2C13DC82E /* Pods-iBeaconAttendance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iBeaconAttendance.release.xcconfig"; path = "Target Support Files/Pods-iBeaconAttendance/Pods-iBeaconAttendance.release.xcconfig"; sourceTree = "<group>"; };
+		EA1E9B9F23A41B0B002CB71B /* ProfessorLogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessorLogsViewController.swift; sourceTree = "<group>"; };
 		EA2DEA21237C92AF00AE0E60 /* iBeaconAttendance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iBeaconAttendance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2DEA24237C92AF00AE0E60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA2DEA26237C92AF00AE0E60 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
@@ -55,8 +55,6 @@
 		EA2DEA35237C92B200AE0E60 /* iBeaconAttendanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iBeaconAttendanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA2DEA39237C92B200AE0E60 /* iBeaconAttendanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBeaconAttendanceTests.swift; sourceTree = "<group>"; };
 		EA2DEA3B237C92B200AE0E60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA2DEA48237C9CB100AE0E60 /* StudentLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLoginViewController.swift; sourceTree = "<group>"; };
-		EA2DEA4A237C9CBA00AE0E60 /* ProfessorLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessorLoginViewController.swift; sourceTree = "<group>"; };
 		EA2DEA4C237DFB5B00AE0E60 /* StudentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentViewController.swift; sourceTree = "<group>"; };
 		EA2DEA4E237DFB6400AE0E60 /* ProfessorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfessorViewController.swift; sourceTree = "<group>"; };
 		EA2DEA502381DE1400AE0E60 /* UserLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLogin.swift; sourceTree = "<group>"; };
@@ -134,10 +132,9 @@
 			children = (
 				EA2DEA24237C92AF00AE0E60 /* AppDelegate.swift */,
 				EA2DEA26237C92AF00AE0E60 /* EntryViewController.swift */,
-				EA2DEA48237C9CB100AE0E60 /* StudentLoginViewController.swift */,
-				EA2DEA4A237C9CBA00AE0E60 /* ProfessorLoginViewController.swift */,
 				EA2DEA4C237DFB5B00AE0E60 /* StudentViewController.swift */,
 				EA2DEA4E237DFB6400AE0E60 /* ProfessorViewController.swift */,
+				EA1E9B9F23A41B0B002CB71B /* ProfessorLogsViewController.swift */,
 				EA2DEA28237C92AF00AE0E60 /* Main.storyboard */,
 				EA2DEA522382E08A00AE0E60 /* TransmitterListener.swift */,
 				EA2DEA2B237C92B100AE0E60 /* Assets.xcassets */,
@@ -333,14 +330,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2DEA4D237DFB5B00AE0E60 /* StudentViewController.swift in Sources */,
-				EA2DEA4B237C9CBA00AE0E60 /* ProfessorLoginViewController.swift in Sources */,
-				EA2DEA49237C9CB100AE0E60 /* StudentLoginViewController.swift in Sources */,
 				EA2DEA27237C92AF00AE0E60 /* EntryViewController.swift in Sources */,
 				EACECC61239C2965002CAEAB /* Student.swift in Sources */,
 				EA2DEA4F237DFB6400AE0E60 /* ProfessorViewController.swift in Sources */,
 				EACECC6723A00461002CAEAB /* Utilities.swift in Sources */,
 				EA2DEA512381DE1400AE0E60 /* UserLogin.swift in Sources */,
 				EACECC63239C296E002CAEAB /* Professor.swift in Sources */,
+				EA1E9BA023A41B0B002CB71B /* ProfessorLogsViewController.swift in Sources */,
 				EA2DEA25237C92AF00AE0E60 /* AppDelegate.swift in Sources */,
 				EA2DEA532382E08A00AE0E60 /* TransmitterListener.swift in Sources */,
 				EACECC65239FED3C002CAEAB /* User.swift in Sources */,

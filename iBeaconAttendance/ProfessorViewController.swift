@@ -30,6 +30,7 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
     
     var transmissionInformation: [String : Any] = [:]
     
+    @IBOutlet weak var logsButton: UIButton!
     @IBOutlet weak var courseNameTextfield: UITextField!
     @IBOutlet weak var transmissionSwitch: UISwitch!
     @IBOutlet weak var presentStudentsTable: UITableView!
@@ -59,7 +60,7 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
         //If transmissionSwitch is turning on
         if(transmissionSwitch.isOn) {
             //Present spinner wheel to show in-progress actions.
-            //activityIndicator.startAnimating()
+            activityIndicator.startAnimating()
             
             //Get next available minor/major information from database.
                 //I have some options here.
@@ -78,6 +79,7 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
         }
         else {
             transmitter?.toggleTransmitting()
+            transmitter?.forceStopTransmitting()
         }
         
         //Turn off spinner wheel to show in-progress actions as complete.
@@ -129,8 +131,21 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
         else {
             //Else statement because if it is a new entry, we only want to begin transmitting once entry is added to Firestore
             transmitter?.toggleTransmitting()
+            
+            //Alert the user of transmission status toggle.
+            let transmitterToggleAlert = UIAlertController(title: "Transmitter Status", message: "The transmitter status was toggled!", preferredStyle: .alert)
+            
+            transmitterToggleAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(transmitterToggleAlert, animated: true)
         }
         
+        activityIndicator.stopAnimating()
+        
+    }
+    
+    @IBAction func logsAction(_ sender: Any) {
+        performSegue(withIdentifier: "professorLogsSegway", sender: self)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -150,13 +165,10 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
         presentStudentsTable.delegate = self
         presentStudentsTable.dataSource = self
         
-        /*
-        for i in 1...20 {
-            presentStudents.append(String(i))
-        }
-        */
-        
         //Visual changes
+        logsButton.layer.cornerRadius = 10
+        logsButton.clipsToBounds = true
+        
         logoutButton.layer.cornerRadius = 10
         logoutButton.clipsToBounds = true
         
@@ -171,8 +183,11 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
         
         let db = Firestore.firestore()
         
+        let documentRefString = db.collection("Users").document(User.shared.email ?? "")
+        let professorRef = db.document(documentRefString.path)
+        
         db.collection("Logs")
-            .whereField("professorRef", isEqualTo: User.shared.email ?? "")
+            .whereField("professorRef", isEqualTo: professorRef)
             .whereField("timestamp", isGreaterThan: transmissionInformation["timestamp"] ?? 0)
             .whereField("beaconRef", isEqualTo: transmissionInformation["beaconRef"] ?? "")
             .addSnapshotListener { querySnapshot, error in
@@ -257,7 +272,12 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
     }
 
     @IBAction func professorLogoutAction(_ sender: Any) {
-        performSegue(withIdentifier: "professorLogoutSegway", sender: self)
+        if(UserLogin().signOut()) {
+            performSegue(withIdentifier: "professorLogoutSegway", sender: self)
+        }
+        else {
+            UserLogin().displayErrorAlert(title: "Sign Out Error", msg: "There was an error while signing out, please try again.")
+        }
     }
     
 }
