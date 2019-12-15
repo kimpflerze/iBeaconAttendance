@@ -142,50 +142,7 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
         
         activityIndicator.stopAnimating()
         
-    }
-    
-    @IBAction func logsAction(_ sender: Any) {
-        performSegue(withIdentifier: "professorLogsSegway", sender: self)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        transmitter = TransmitterListener()
-        transmitter?.beaconReadyCallback = beaconInformationReady
-        
-        self.courseNameTextfield.delegate = self
-        
-        presentStudentsTable.delegate = self
-        presentStudentsTable.dataSource = self
-        
-        //Visual changes
-        logsButton.layer.cornerRadius = 10
-        logsButton.clipsToBounds = true
-        
-        logoutButton.layer.cornerRadius = 10
-        logoutButton.clipsToBounds = true
-        
-        presentStudentsTable.layer.masksToBounds = true
-        presentStudentsTable.layer.borderColor = Utilities.iBeaconAttendanceBlue.cgColor
-        presentStudentsTable.layer.borderWidth = 2.0
-        presentStudentsTable.layer.cornerRadius = 10
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let db = Firestore.firestore()
-        
-        let documentRefString = db.collection("Users").document(User.shared.email ?? "")
-        let professorRef = db.document(documentRefString.path)
-        
+        //Now, create the update listener.
         db.collection("Logs")
             .whereField("professorRef", isEqualTo: professorRef)
             .whereField("timestamp", isGreaterThan: transmissionInformation["timestamp"] ?? 0)
@@ -234,6 +191,44 @@ class ProfessorViewController: UIViewController, UITextFieldDelegate, UITableVie
                 
         }
         
+    }
+    
+    @IBAction func logsAction(_ sender: Any) {
+        performSegue(withIdentifier: "professorLogsSegway", sender: self)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        transmitter = TransmitterListener()
+        transmitter?.beaconReadyCallback = beaconInformationReady
+        
+        self.courseNameTextfield.delegate = self
+        
+        presentStudentsTable.delegate = self
+        presentStudentsTable.dataSource = self
+        
+        //Visual changes
+        logsButton.layer.cornerRadius = 10
+        logsButton.clipsToBounds = true
+        
+        logoutButton.layer.cornerRadius = 10
+        logoutButton.clipsToBounds = true
+        
+        presentStudentsTable.layer.masksToBounds = true
+        presentStudentsTable.layer.borderColor = Utilities.iBeaconAttendanceBlue.cgColor
+        presentStudentsTable.layer.borderWidth = 2.0
+        presentStudentsTable.layer.cornerRadius = 10
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
